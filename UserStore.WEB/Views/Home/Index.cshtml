@@ -7,94 +7,102 @@
 
 
 
-        <div class="row">
-            <div class="col-md-3 filter-box">
-                    @using (Html.BeginForm("Search", "Home", FormMethod.Get, new { enctype = "multipart/form-data" }))
+<div class="row">
+    <div class="col-md-3 filter-box">
+        @using (Html.BeginForm("Search", "Home", FormMethod.Get, new { enctype = "multipart/form-data" }))
+        {
+            <div>
+
+                @Html.TextBox("Search", null, new { @class = "form-control" })
+            </div>
+            <div class="checkbox">
+                <ul>
+                    @foreach (var li in Model.Genres)
                     {
-                <div>
-                
-                    @Html.TextBox("Search", null, new { @class = "form-control" })
-                </div>
+                        if (li != "")
+                        {
+                            <li><input type="checkbox" class="checkbox" name="genres" value="@li" id="@li" /><label for="@li">@li</label></li>
+                        }
+                    }
+                </ul>
+            </div>
+                <br />
                 <div class="checkbox">
                     <ul>
-                        @foreach (var li in Model.Genres)
-                        {
-                            if (li != "")
-                            {
-                                <li><input type="checkbox" class="checkbox" name="genres" value="@li" id="@li" /><label for="@li">@li</label></li>
-                            }
-                        }
+
+                        <li>
+                            <input type="checkbox" class="checkbox" name="typ" value="Book" id="Book" checked="checked" /><label for="Book">Book</label>
+                        </li>
+                        <li>
+                            <input type="checkbox" class="checkbox" name="typ" value="Audio" id="Audio" checked="checked" /><label for="Audio">Audio</label>
+                        </li>
+                        <li>
+
+                            <input type="checkbox" class="checkbox" name="typ" value="Video" id="Video" checked="checked" /><label for="Video">Video</label>
+
+                        </li>
+                        <li>
+
+                            <input type="checkbox" class="checkbox" name="typ" value="Empty" id="Empty" checked="checked" /><label for="Empty">Empty</label>
+
+                        </li>
+
                     </ul>
                 </div>
-                    <br />
-                    <div class="checkbox">
-                        <ul>
 
-                            <li>
-                                <input type="checkbox" class="checkbox" name="typ" value="Book" id="Book" checked="checked"/><label for="Book">Book</label>
-                            </li>
-                            <li>
-                                <input type="checkbox" class="checkbox" name="typ" value="Audio" id="Audio" checked="checked"/><label for="Audio">Audio</label>
-                            </li>
-                            <li>
-
-                                <input type="checkbox" class="checkbox" name="typ" value="Video" id="Video" checked="checked"/><label for="Video">Video</label>
-
-                            </li>
-                            <li>
-
-                                <input type="checkbox" class="checkbox" name="typ" value="Empty" id="Empty" checked="checked" /><label for="Empty">Empty</label>
-
-                            </li>
-
-                        </ul>
+                    <div class="but">
+                        <input type="submit" value="Search" class="btn btn-default" />
                     </div>
-                
-                <div class="but">
-                    <input type="submit" value="Search" class="btn btn-default" />                                   
-                </div>
-                <br />
-                    }
-                
-                
-            </div>
-            <div id="contents"  class="col-md-9 col-md-offset-3">
-                @if (Model.Contents != null)
+                    <br />
+        }
+
+
+    </div>
+    <div id="contents" class="col-md-9 col-md-offset-3">
+        <div class="row">
+            @if (Model.Contents != null)
+            {
+                if (Model.PageInfo.TotalItems == 1)
                 {
-                    if (Model.PageInfo.TotalItems == 1)
+                    <div id="@Model.Contents.First().Id">
+                        @Html.Partial("Content", Model.Contents.First())
+                    </div>
+                }
+                else
+                {
+                    foreach (var item in Model.Contents)
                     {
-                        <div id="@Model.Contents.First().Id">
-                            @Html.Partial("Content", Model.Contents.First())
-                         </div>
-                         }
-                            else
-                            {
-                            foreach (var item in Model.Contents)
-                            {
-                            if (item != null)
-                            {
-                            <div id=@item.Id class="boxes">
+                        if (item != null)
+                        {
+                            <div id=@item.Id class="col-md-3 boxes">
                                 @Html.Partial("ShortContent", item)
                             </div>
-                            }
                         }
-                        <div  class="btn-group padding">
-                            @Ajax.PageLinks(new AjaxOptions
-                       {
-                           UpdateTargetId = "contents",
-                           InsertionMode = InsertionMode.Replace,
-                           HttpMethod = "GET",
-                           
-                       },
-                       Model.PageInfo ,x => Url.Action("Index", new { types = Model.Types, page = x, filter = Model.Filter, value = Model.Value }))
-                        </div>
                     }
+
                 }
 
-                        </div>
-
+            }
         </div>
-        
-   
+        @if (Model.PageInfo.TotalItems != 1)
+        {
+        <div class="row">
+            <div class="col-md-12 btn-group padding">
+                @Ajax.PageLinks(new AjaxOptions
+           {
+               UpdateTargetId = "contents",
+               InsertionMode = InsertionMode.Replace,
+               HttpMethod = "GET",
+
+           },
+                       Model.PageInfo, x => Url.Action("Index", new { types = Model.Types, page = x, filter = Model.Filter, value = Model.Value }))
+            </div>
+        </div>
+        }
+    </div>
+
+</div>
+
+
 
 <br />
