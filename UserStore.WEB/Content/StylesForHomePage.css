@@ -1,0 +1,99 @@
+﻿img {
+            width: 100%;
+            height:50%;
+            margin: 5px auto;
+        }
+
+        .filter-box {
+            position:fixed;
+            top: 55px;
+            background-color: #333333;
+            color: #ffffff;
+            
+            height:91vh;
+            padding-top: 15px;
+            overflow-y: scroll;
+            border: 1px solid #555555;
+        }
+
+        .content-header-align > h3{
+            text-align: center;
+            margin: 1rem;
+        }
+        .content-header-align h3  a{
+            color:white;
+        }
+
+        .content-box {
+            margin: 5px auto;
+            
+            border: 1px black solid;
+            
+        }
+        .boxes{
+            width : 23%;
+            display:inline-block;
+            
+        }
+        .boxes-2{
+            width : 46%;
+            display:inline-block;
+            margin:5px;
+            
+        }
+        .bg-content {
+            background-color:lightgray;
+            color: #ddaaaa;
+        }
+        .bg-content a{
+            color:  darkblue;
+        }
+        .bg-content label{
+            color:black;
+        }
+        .bg-content-header {
+            
+            color: #ffffff;
+        }
+        .but{
+            padding-top:15px;
+        }
+        .Book{
+            background-color:darkgreen;
+        }
+        .Audio{
+            background-color:darkred;
+        }
+        .Video{
+            background-color:  darkblue;
+        }
+        .Empty{
+            background-color:  black;
+        }
+        .AddNewContent{
+
+        }
+        .Update{
+            display:none;
+        }
+        .padding{
+            display:table-footer-group;
+        }
+        .VoteUp label{
+            color:green;
+        }
+        .VoteDown label{
+            color:red;
+        }
+        .Properties-bg-1{
+            background-color:lightcoral;
+            border-radius:5px;
+        }
+        .Properties-bg-2{
+            background-color:lightgreen;
+            border-radius:5px;
+        }
+        .Properties-bg-3{
+            background-color:lightblue;
+            border-radius:5px;
+        }

@@ -1,0 +1,244 @@
+﻿@model UserStore.WEB.Models.ContentModelOutPut
+@{
+    ViewBag.Title = "Content Page";
+}
+@{
+    Html.EnableUnobtrusiveJavaScript(true);
+}
+@if (Model != null)
+{
+<div class="row content-box">
+    
+    <div class="col-md-12 bg-content">
+        
+            <div class="row bg-content-header @Model.Type">
+                <div class="col-md-12 content-header-align">
+                    @if (Model.Name != "")
+                    {
+                        <h3> @Html.ActionLink(Model.Name, "Index", new { types = ViewBag.Types, page = 1, filter = "name", value = Model.Name })</h3>
+                    }
+                </div>
+            </div>
+            <div class="row ">
+                
+                @foreach (var li in Model.Images)
+                {
+                    if (li != null)
+                    {
+                        <div class="col-md-4">
+                            @Html.Partial("ContentImage", li)
+                        </div>
+                    }
+
+                }
+                
+                    <div class="col-md-8">
+                        <div class="boxes-2">
+                            <div class="Properties-bg-1">
+                                <div>
+                                    @Html.LabelFor(x => Model.Directors)
+                                </div>
+                                <div>
+                                    @foreach (var li in Model.Directors)
+                                    {
+                                        if (li != "")
+                                        {
+
+                                            <span>
+                                                @Html.ActionLink(li, "Index", new { types = ViewBag.Types, page = 1, filter = "director", value = li }, new { @class = "btn btn-default" })
+                                            </span>
+                                        }
+                                    }
+                                </div>
+                            </div>
+
+
+
+
+                            <div class="Properties-bg-2">
+                                <div>
+                                    @Html.LabelFor(x => Model.Writers)
+                                </div>
+                                <div>
+                                    @foreach (var li in Model.Writers)
+                                    {
+                                        if (li != "")
+                                        {
+                                            <span> @Html.ActionLink(li, "Index", new { types = ViewBag.Types, page = 1, filter = "scenarist", value = li }, new { @class = "btn btn-default" })</span>
+                                        }
+                                    }
+                                </div>
+                            </div>
+
+
+                            <div class="Properties-bg-3">
+                                <div>
+                                    @Html.LabelFor(x => Model.Genres)
+                                </div>
+                                <div>
+                                    @foreach (var li in Model.Genres)
+                                    {
+                                        if (li != "")
+                                        {
+                                            <span>@Html.ActionLink(li, "Index", new { types = ViewBag.Types, page = 1, filter = "genre", value = li }, new { @class = "btn btn-default" })</span>
+                                        }
+                                    }
+                                </div>
+                            </div>
+                            <div class="Properties-bg-1">
+                                @if (Model.Language != "")
+                                {
+                                    <span>
+                                        @Html.LabelFor(x => Model.Language)
+                                        @Html.ActionLink(Model.Language, "Index", new { types = ViewBag.Types, page = 1, filter = "language", value = Model.Language }, new { @class = "btn btn-default" })
+                                    </span>
+                                }
+                            </div>
+                            <div class="Properties-bg-2">
+                                @if (Model.Transletor != "")
+                                {
+                                    <span>
+                                        @Html.LabelFor(x => Model.Transletor)
+                                        @Html.ActionLink(Model.Transletor, "Index", new { types = ViewBag.Types, page = 1, filter = "transletor", value = Model.Transletor }, new { @class = "btn btn-default" })
+                                    </span>
+                                }
+                            </div>
+                            <div class="Properties-bg-3">
+                                @if (Model.Year != "")
+                                {
+                                    @Html.LabelFor(x => Model.Year)
+                                    <span>
+                                        @Html.ActionLink(Model.Year, "Index", new { types = ViewBag.Types, page = 1, filter = "year", value = Model.Year }, new { @class = "btn btn-default" })
+                                    </span>
+                                }
+                            </div>
+                        </div>
+                    <div class="boxes-2">
+                        <div>
+                            @if (User.Identity.IsAuthenticated)
+                            {
+                                <span class="VoteUp">
+                                    @Html.Label(Model.VoteUp.ToString())
+                                    @Html.LabelFor(x => Model.VoteUp)
+                                    @Ajax.ActionLink("Up", "DisplayFullContent", new { id = Model.Id },
+  new AjaxOptions
+  {
+      UpdateTargetId = Model.Id.ToString(),
+      InsertionMode = InsertionMode.Replace,
+      HttpMethod = "GET",
+      Url = Url.Action("MakeVote", "Home", new { user = User.Identity.Name, vote = 1, id = Model.Id })
+
+  }, new { @class = "btn btn-default" })
+                                </span>
+
+                                <span class="VoteDown">
+                                    @Html.Label(Model.VoteDown.ToString())
+                                    @Html.LabelFor(x => Model.VoteDown)
+                                    @Ajax.ActionLink("Down", "DisplayFullContent", new { id = Model.Id },
+       new AjaxOptions
+       {
+           UpdateTargetId = Model.Id.ToString(),
+           InsertionMode = InsertionMode.Replace,
+           HttpMethod = "GET",
+           Url = Url.Action("MakeVote", "Home", new { user = User.Identity.Name, vote = -1, id = Model.Id })
+
+       }, new { @class = "btn btn-default" })
+                                </span>
+
+                            }
+                            <div>
+                                @if (User.IsInRole("admin"))
+                                {
+                                    if (Model.Check == "Not Checked")
+                                    {
+                                        <span>
+                                            @Ajax.ActionLink("Check", "DisplayFullContent", new { id = Model.Id, types = ViewBag.Types, page = ViewBag.Page, filter = ViewBag.Filter, value = ViewBag.Value },
+                               new AjaxOptions
+                               {
+                                   UpdateTargetId = Model.Id.ToString(),
+                                   InsertionMode = InsertionMode.Replace,
+                                   HttpMethod = "Post",
+                                   Url = Url.Action("MakeCheck", "Home", new { id = Model.Id, check = 2 })
+                               }, new { @class = "btn btn-default" })
+                                        </span>
+                                    }
+                                    else
+                                    {
+                                        <span>
+                                            @Ajax.ActionLink("UnCheck", "DisplayFullContent", new { id = Model.Id, types = ViewBag.Types, page = ViewBag.Page, filter = ViewBag.Filter, value = ViewBag.Value },
+                               new AjaxOptions
+                               {
+                                   UpdateTargetId = Model.Id.ToString(),
+                                   InsertionMode = InsertionMode.Replace,
+                                   HttpMethod = "Post",
+                                   Url = Url.Action("MakeCheck", "Home", new { id = Model.Id, check = 1 })
+                               }, new { @class = "btn btn-default" })
+                                        </span>
+                                    }
+                                }
+                            </div>
+                        </div>
+                        <div>
+                            @if (User.IsInRole("admin"))
+                            {
+                                <div>
+                                    <span>
+
+                                        @Html.ActionLink("Update", "UpdateContent", new { Id = Model.Id }, new { @class = "btn btn-default" })
+                                    </span>
+                                    <span id ="@Model.Id.ToString()-delete">
+                                        @Ajax.ActionLink("Delete", "Index", new { types = ViewBag.Types, page = ViewBag.Page, filter = ViewBag.Filter, value = ViewBag.Value },
+                               new AjaxOptions
+                               {
+                                   Confirm = "Delete file?",
+                                   UpdateTargetId = "Home",
+                                   InsertionMode = InsertionMode.Replace,
+                                   HttpMethod = "Post",
+                                   Url = Url.Action("DeleteContent", "Home", new { id = Model.Id, check = 3 })
+                               }
+                               , new { @class = "btn btn-default" }
+                                   )
+                               
+                                    </span>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                    <div>
+                        @if (User.Identity.IsAuthenticated && Model.Path != "")
+                        {
+                            @Html.ActionLink("Download", "Download", new { name = Model.Name, filePath = Model.Path }, new { @class = "btn btn-default" })
+                        }
+                    </div>
+
+                </div>
+
+
+            </div>
+
+        <div class="row ">
+            <div class="col-md-4">
+                
+                    @if (Model.Type == "Video")
+                {
+                        <video class="Video" id="@Model.Path" width="320" height="240" preload="none" controls="controls">
+                            <source src="@Url.Action("GetVideo", "Home", new { Model.Path })" type='video/webm; codecs="vp8, vorbis"' /> HTML5 Video not supported!
+                        </video>
+                    }
+                    else if (Model.Type == "Audio")
+                    {
+                        <audio id="@Model.Path" preload="none" controls="controls">
+                            <source src="~/AppContent/@Model.Path" type="audio/mp3">
+                        </audio>
+                    }
+                
+            </div>
+        </div>
+        
+    </div>
+        
+</div>
+}
+
+
+

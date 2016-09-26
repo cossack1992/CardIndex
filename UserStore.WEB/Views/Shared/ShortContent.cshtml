@@ -1,0 +1,51 @@
+﻿@model UserStore.WEB.Models.ContentModelOutPut
+@{
+    ViewBag.Title = "Content Page";
+}
+@{
+    Html.EnableUnobtrusiveJavaScript(true);
+}
+<div class="row content-box">
+    <div class="col-md-12">
+        @if (Model != null)
+            {
+            <div class="row bg-content-header @Model.Type">
+                <div class="col-md-12 content-header-align">
+                    @if (Model.Name != "")
+                    {
+                    <h3> @Html.ActionLink(Model.Name, "DisplayFullContent", new {id = Model.Id, filter = ViewBag.Filter })</h3>
+                    }
+                </div>
+            </div>
+            <div class="row bg-content">
+                @foreach (var li in Model.Images)
+                {
+                    if (li != null)
+                    {
+                    <div class="col-md-12">
+                        @Html.Partial("ContentImage", li)
+                    </div>
+                    }
+
+                }
+                <div class="col-md-12">
+                    <div class="text-center">                                                  
+                                <span class="VoteUp">
+                                    @Html.Label("Like" + Model.VoteUp.ToString())
+                                </span>
+                                <span class="VoteDown">
+                                    @Html.Label("Dislake" + Model.VoteDown.ToString())
+                                </span>                                                   
+                    </div>
+                    </div>
+
+            </div>
+        }
+    </div>
+
+</div>
+
+
+
+
+

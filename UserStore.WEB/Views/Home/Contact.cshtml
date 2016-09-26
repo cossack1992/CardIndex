@@ -1,0 +1,18 @@
+﻿
+@{
+    ViewBag.Title = "Contact";
+}
+<h2>@ViewBag.Title.</h2>
+<h3>@ViewBag.Message</h3>
+@if (User.IsInRole("admin"))
+{
+    <h2>admin!</h2>
+}
+<address>
+
+    Kiev, Ukraine<br />
+    cozachello@gmail.com<br />
+    <abbr title="Phone">P:</abbr>
+    (093)-811-25-89
+</address>
+
