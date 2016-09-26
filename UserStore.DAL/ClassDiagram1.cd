@@ -1,0 +1,197 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="UserStore.DAL.Entities.AbstractContent">
+    <Position X="4.5" Y="2.5" Width="1.5" />
+    <AssociationLine Name="Check" Type="UserStore.DAL.Entities.Check" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="5.438" Y="4.565" />
+        <Point X="5.438" Y="7.531" />
+        <Point X="2" Y="7.531" />
+      </Path>
+    </AssociationLine>
+    <AssociationLine Name="Directors" Type="UserStore.DAL.Entities.Director" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="5.188" Y="4.565" />
+        <Point X="5.188" Y="6.531" />
+        <Point X="2" Y="6.531" />
+      </Path>
+    </AssociationLine>
+    <AssociationLine Name="Genres" Type="UserStore.DAL.Entities.Genre" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="4.5" Y="3.375" />
+        <Point X="4.125" Y="3.375" />
+        <Point X="4.125" Y="2.75" />
+        <Point X="2" Y="2.75" />
+      </Path>
+    </AssociationLine>
+    <AssociationLine Name="Images" Type="UserStore.DAL.Entities.Image" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="4.5" Y="4.188" />
+        <Point X="4.125" Y="4.188" />
+        <Point X="4.125" Y="4.781" />
+        <Point X="2" Y="4.781" />
+      </Path>
+    </AssociationLine>
+    <AssociationLine Name="Language" Type="UserStore.DAL.Entities.Language" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="5.812" Y="4.565" />
+        <Point X="5.812" Y="8.281" />
+        <Point X="2" Y="8.281" />
+      </Path>
+    </AssociationLine>
+    <AssociationLine Name="Transletor" Type="UserStore.DAL.Entities.Translator" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="4.875" Y="4.565" />
+        <Point X="4.875" Y="5.781" />
+        <Point X="2" Y="5.781" />
+      </Path>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AAACABgADAAAAAIAAAIAAAQAAIAAABIAAAAAAAAAAAE=</HashCode>
+      <FileName>Entities\AbstractContent.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Check" />
+      <Property Name="Language" />
+      <Property Name="Transletor" />
+    </ShowAsAssociation>
+    <ShowAsCollectionAssociation>
+      <Property Name="Directors" />
+      <Property Name="Genres" />
+      <Property Name="Images" />
+      <Property Name="Writers" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="UserStore.DAL.Entities.ApplicationRole" Collapsed="true">
+    <Position X="11.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Entities\ApplicationRole.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UserStore.DAL.Entities.ApplicationUser" Collapsed="true">
+    <Position X="11" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABA=</HashCode>
+      <FileName>Entities\ApplicationUser.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UserStore.DAL.Entities.Audio" Collapsed="true">
+    <Position X="5.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Entities\Audio.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UserStore.DAL.Entities.Book" Collapsed="true">
+    <Position X="7.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Entities\Book.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UserStore.DAL.Entities.Check" Collapsed="true">
+    <Position X="0.5" Y="7.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAABAAAA=</HashCode>
+      <FileName>Entities\Check.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UserStore.DAL.Entities.ClientProfile" Collapsed="true">
+    <Position X="13.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAQAAAAAAQAAAAAAAACAAAAAAAAAAA=</HashCode>
+      <FileName>Entities\ClientProfile.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UserStore.DAL.Entities.Director" Collapsed="true">
+    <Position X="0.5" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAABAAAA=</HashCode>
+      <FileName>Entities\Director.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UserStore.DAL.Entities.Empty" Collapsed="true">
+    <Position X="1.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Entities\Empty.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UserStore.DAL.Entities.Genre" Collapsed="true">
+    <Position X="0.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAABAAAA=</HashCode>
+      <FileName>Entities\Genre.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UserStore.DAL.Entities.Image" Collapsed="true">
+    <Position X="0.5" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAIAAAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Entities\Image.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UserStore.DAL.Entities.Language" Collapsed="true">
+    <Position X="0.5" Y="8" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAABAAAA=</HashCode>
+      <FileName>Entities\Language.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UserStore.DAL.Entities.Scenarist" Collapsed="true">
+    <Position X="0.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAABAAAA=</HashCode>
+      <FileName>Entities\Scenarist.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UserStore.DAL.Entities.Translator" Collapsed="true">
+    <Position X="0.5" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAABAAAA=</HashCode>
+      <FileName>Entities\Transletor.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UserStore.DAL.Entities.UpDown" Collapsed="true">
+    <Position X="9.75" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAA=</HashCode>
+      <FileName>Entities\UpDown.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UserStore.DAL.Entities.Video" Collapsed="true">
+    <Position X="3.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Entities\Video.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UserStore.DAL.Entities.Vote">
+    <Position X="7.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAADAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAABAAAA=</HashCode>
+      <FileName>Entities\Vote.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Contents" />
+      <Property Name="User" />
+      <Property Name="UpDown" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="UserStore.DAL.Identity.ApplicationRoleManager" Collapsed="true">
+    <Position X="13.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Identity\ApplicationRoleManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UserStore.DAL.Identity.ApplicationUserManager" Collapsed="true">
+    <Position X="13.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Identity\ApplicationUserManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
