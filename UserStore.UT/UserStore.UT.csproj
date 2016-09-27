@@ -59,13 +59,21 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="UnitTest1.cs" />
+    <Compile Include="UnitTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\UserStore.BLL\UserStore.BLL.csproj">
       <Project>{c0de6fd4-b602-4a58-a1d3-db9f0e97c0d6}</Project>
       <Name>UserStore.BLL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\UserStore.DAL\UserStore.DAL.csproj">
+      <Project>{f05603cc-d609-4f9a-9332-fee84f4e8cfe}</Project>
+      <Name>UserStore.DAL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\UserStore.WEB\UserStore.WEB.csproj">
+      <Project>{bb1b614e-99a9-4fb3-81ca-353272be9402}</Project>
+      <Name>UserStore.WEB</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
