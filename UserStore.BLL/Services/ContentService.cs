@@ -101,6 +101,7 @@ namespace UserStore.BLL.Services
 
         private async Task SetProtertiesForContent(ContentDTO contentDTO)
         {
+            
             foreach (var li in contentDTO.Directors)
             {
                 var director = await DataBase.DirectorManager.Get(li);

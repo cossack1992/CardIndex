@@ -68,10 +68,11 @@ namespace UserStore.WEB.Controllers
                         if (!Directory.Exists(path3)) Directory.CreateDirectory(path3);
                         string path4 = Path.Combine(path3, str1);
                         file.SaveAs(path4);
+                        
                         return path2 + @"/" + str1;
                     }
                 }
-                return "";
+                 return "";
             }
             catch
             {
@@ -90,7 +91,7 @@ namespace UserStore.WEB.Controllers
                 if (ModelState.IsValid)
                 {
                     
-                    OperationDetails det = await Service.CreateContent(ConvertTypeWEB.Convert(Model, Save(Model.Image), Save(Model.Path)));
+                    OperationDetails det = await Service.CreateContent(ConvertTypeWEB.Convert(Model,  Save(Model.Image),  Save(Model.Path)));
                     if(det.Succedeed)
                     return Redirect("/Home/Index");
                     else return View("Error");
@@ -120,7 +121,7 @@ namespace UserStore.WEB.Controllers
             
                 if (ModelState.IsValid)
                 {
-                    OperationDetails det = await Service.UpdateContent(ConvertTypeWEB.Convert(Model, Save(Model.Image), Save(Model.Path)));
+                    OperationDetails det = await Service.UpdateContent(ConvertTypeWEB.Convert(Model,  Save(Model.Image),  Save(Model.Path)));
                     if (det.Succedeed)
                         return Redirect("/Home/Index");
                     else return View("Error");

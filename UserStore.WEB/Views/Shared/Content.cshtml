@@ -7,7 +7,7 @@
 }
 @if (Model != null)
 {
-<div class="row content-box">
+<div class="row content-box-2">
     
     <div class="col-md-12 bg-content">
         
@@ -33,7 +33,7 @@
                 }
                 
                     <div class="col-md-8">
-                        <div class="boxes-2">
+                        
                             <div class="Properties-bg-1">
                                 <div>
                                     @Html.LabelFor(x => Model.Directors)
@@ -55,7 +55,7 @@
 
 
 
-                            <div class="Properties-bg-2">
+                            <div class="Properties-bg-1">
                                 <div>
                                     @Html.LabelFor(x => Model.Writers)
                                 </div>
@@ -71,7 +71,7 @@
                             </div>
 
 
-                            <div class="Properties-bg-3">
+                            <div class="Properties-bg-1">
                                 <div>
                                     @Html.LabelFor(x => Model.Genres)
                                 </div>
@@ -94,7 +94,7 @@
                                     </span>
                                 }
                             </div>
-                            <div class="Properties-bg-2">
+                            <div class="Properties-bg-1">
                                 @if (Model.Transletor != "")
                                 {
                                     <span>
@@ -103,7 +103,7 @@
                                     </span>
                                 }
                             </div>
-                            <div class="Properties-bg-3">
+                            <div class="Properties-bg-1">
                                 @if (Model.Year != "")
                                 {
                                     @Html.LabelFor(x => Model.Year)
@@ -112,98 +112,8 @@
                                     </span>
                                 }
                             </div>
-                        </div>
-                    <div class="boxes-2">
-                        <div>
-                            @if (User.Identity.IsAuthenticated)
-                            {
-                                <span class="VoteUp">
-                                    @Html.Label(Model.VoteUp.ToString())
-                                    @Html.LabelFor(x => Model.VoteUp)
-                                    @Ajax.ActionLink("Up", "DisplayFullContent", new { id = Model.Id },
-  new AjaxOptions
-  {
-      UpdateTargetId = Model.Id.ToString(),
-      InsertionMode = InsertionMode.Replace,
-      HttpMethod = "GET",
-      Url = Url.Action("MakeVote", "Home", new { user = User.Identity.Name, vote = 1, id = Model.Id })
-
-  }, new { @class = "btn btn-default" })
-                                </span>
-
-                                <span class="VoteDown">
-                                    @Html.Label(Model.VoteDown.ToString())
-                                    @Html.LabelFor(x => Model.VoteDown)
-                                    @Ajax.ActionLink("Down", "DisplayFullContent", new { id = Model.Id },
-       new AjaxOptions
-       {
-           UpdateTargetId = Model.Id.ToString(),
-           InsertionMode = InsertionMode.Replace,
-           HttpMethod = "GET",
-           Url = Url.Action("MakeVote", "Home", new { user = User.Identity.Name, vote = -1, id = Model.Id })
-
-       }, new { @class = "btn btn-default" })
-                                </span>
-
-                            }
-                            <div>
-                                @if (User.IsInRole("admin"))
-                                {
-                                    if (Model.Check == "Not Checked")
-                                    {
-                                        <span>
-                                            @Ajax.ActionLink("Check", "DisplayFullContent", new { id = Model.Id, types = ViewBag.Types, page = ViewBag.Page, filter = ViewBag.Filter, value = ViewBag.Value },
-                               new AjaxOptions
-                               {
-                                   UpdateTargetId = Model.Id.ToString(),
-                                   InsertionMode = InsertionMode.Replace,
-                                   HttpMethod = "Post",
-                                   Url = Url.Action("MakeCheck", "Home", new { id = Model.Id, check = 2 })
-                               }, new { @class = "btn btn-default" })
-                                        </span>
-                                    }
-                                    else
-                                    {
-                                        <span>
-                                            @Ajax.ActionLink("UnCheck", "DisplayFullContent", new { id = Model.Id, types = ViewBag.Types, page = ViewBag.Page, filter = ViewBag.Filter, value = ViewBag.Value },
-                               new AjaxOptions
-                               {
-                                   UpdateTargetId = Model.Id.ToString(),
-                                   InsertionMode = InsertionMode.Replace,
-                                   HttpMethod = "Post",
-                                   Url = Url.Action("MakeCheck", "Home", new { id = Model.Id, check = 1 })
-                               }, new { @class = "btn btn-default" })
-                                        </span>
-                                    }
-                                }
-                            </div>
-                        </div>
-                        <div>
-                            @if (User.IsInRole("admin"))
-                            {
-                                <div>
-                                    <span>
-
-                                        @Html.ActionLink("Update", "UpdateContent", new { Id = Model.Id }, new { @class = "btn btn-default" })
-                                    </span>
-                                    <span id ="@Model.Id.ToString()-delete">
-                                        @Ajax.ActionLink("Delete", "Index", new { types = ViewBag.Types, page = ViewBag.Page, filter = ViewBag.Filter, value = ViewBag.Value },
-                               new AjaxOptions
-                               {
-                                   Confirm = "Delete file?",
-                                   UpdateTargetId = "Home",
-                                   InsertionMode = InsertionMode.Replace,
-                                   HttpMethod = "Post",
-                                   Url = Url.Action("DeleteContent", "Home", new { id = Model.Id, check = 3 })
-                               }
-                               , new { @class = "btn btn-default" }
-                                   )
-                               
-                                    </span>
-                                </div>
-                            }
-                        </div>
-                    </div>
+                        
+                    
                     <div>
                         @if (User.Identity.IsAuthenticated && Model.Path != "")
                         {
@@ -217,8 +127,48 @@
             </div>
 
         <div class="row ">
-            <div class="col-md-4">
-                
+            <div class="col-md-4 video">
+                <div class="Vote">
+<span class="VoteUp">
+    @Html.Label(Model.VoteUp.ToString())
+    @Html.LabelFor(x => Model.VoteUp)
+    </span>
+    @if (User.Identity.IsAuthenticated)
+    {
+        <span>
+        @Ajax.ActionLink("Up", "DisplayFullContent", new { id = Model.Id },
+       new AjaxOptions
+       {
+           UpdateTargetId = Model.Id.ToString(),
+           InsertionMode = InsertionMode.Replace,
+           HttpMethod = "GET",
+           Url = Url.Action("MakeVote", "Home", new { user = User.Identity.Name, vote = 1, id = Model.Id })
+
+       }, new { @class = "btn btn-default" })
+                </span>
+    }
+                        <span class="VoteDown">
+                            @Html.Label(Model.VoteDown.ToString())
+                            @Html.LabelFor(x => Model.VoteDown)
+                            </span>
+@if (User.Identity.IsAuthenticated)
+{
+    <span>
+                            @Ajax.ActionLink("Down", "DisplayFullContent", new { id = Model.Id },
+       new AjaxOptions
+       {
+           UpdateTargetId = Model.Id.ToString(),
+           InsertionMode = InsertionMode.Replace,
+           HttpMethod = "GET",
+           Url = Url.Action("MakeVote", "Home", new { user = User.Identity.Name, vote = -1, id = Model.Id })
+
+       }, new { @class = "btn btn-default" })
+                        </span>
+
+                    }
+
+                </div>
+                <div>
                     @if (Model.Type == "Video")
                 {
                         <video class="Video" id="@Model.Path" width="320" height="240" preload="none" controls="controls">
@@ -231,7 +181,71 @@
                             <source src="~/AppContent/@Model.Path" type="audio/mp3">
                         </audio>
                     }
-                
+                </div>
+
+            </div>
+            <div class="col-md-6">
+                <div class="row">
+                    <div class="col-md-4">
+                        @if (User.IsInRole("admin"))
+                        {
+                            if (Model.Check == "Not Checked")
+                            {
+                                <span>
+                                    @Ajax.ActionLink("Check", "DisplayFullContent", new { id = Model.Id, types = ViewBag.Types, page = ViewBag.Page, filter = ViewBag.Filter, value = ViewBag.Value },
+                               new AjaxOptions
+                               {
+                                   UpdateTargetId = Model.Id.ToString(),
+                                   InsertionMode = InsertionMode.Replace,
+                                   HttpMethod = "Post",
+                                   Url = Url.Action("MakeCheck", "Home", new { id = Model.Id, check = 2 })
+                               }, new { @class = "btn btn-default" })
+                                </span>
+                            }
+                            else
+                            {
+                                <span>
+                                    @Ajax.ActionLink("UnCheck", "DisplayFullContent", new { id = Model.Id, types = ViewBag.Types, page = ViewBag.Page, filter = ViewBag.Filter, value = ViewBag.Value },
+                               new AjaxOptions
+                               {
+                                   UpdateTargetId = Model.Id.ToString(),
+                                   InsertionMode = InsertionMode.Replace,
+                                   HttpMethod = "Post",
+                                   Url = Url.Action("MakeCheck", "Home", new { id = Model.Id, check = 1 })
+                               }, new { @class = "btn btn-default" })
+                                </span>
+                            }
+                        }
+                    </div>
+                    <div class="col-md-6">
+                        @if (User.IsInRole("admin"))
+                        {
+                            <div>
+                                <span>
+
+                                    @Html.ActionLink("Update", "UpdateContent", new { Id = Model.Id }, new { @class = "btn btn-default" })
+                                </span>
+                                <span id="@Model.Id.ToString()-delete">
+                                    @Ajax.ActionLink("Delete", "Index", new { types = ViewBag.Types, page = ViewBag.Page, filter = ViewBag.Filter, value = ViewBag.Value },
+                               new AjaxOptions
+                               {
+                                   Confirm = "Delete file?",
+                                   UpdateTargetId = "Home",
+                                   InsertionMode = InsertionMode.Replace,
+                                   HttpMethod = "Post",
+                                   Url = Url.Action("DeleteContent", "Home", new { id = Model.Id, check = 3 })
+                               }
+                               , new { @class = "btn btn-default" }
+                                   )
+
+                                </span>
+                            </div>
+                        }
+                    </div>
+                    
+
+                </div>
+
             </div>
         </div>
         

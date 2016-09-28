@@ -44,6 +44,9 @@
             border: 1px black solid;
             
         }
+        .content-box-2 {
+            margin: 5px auto;            
+        }
         
         .boxes-2{
             width : 46%;
@@ -52,7 +55,9 @@
             
         }
         .bg-content {
-            background-color:lightgray;
+            background: lightgray;
+            background:-moz-linear-gradient(lightgray, white);
+            
             color: #ddaaaa;
             min-height: 50vh;
         }
@@ -90,15 +95,24 @@
         .padding{
             display:table-footer-group;
         }
+       
         .VoteUp label{
             color:green;
         }
         .VoteDown label{
             color:red;
         }
+        .Vote{
+            border:1px black solid;
+            margin: 5px;
+            padding: 5px;
+        }
         .Properties-bg-1{
             background-color:lightcoral;
+            background: -moz-linear-gradient( lightgray, white);
             border-radius:5px;
+            margin: 5px;
+            padding: 5px;
         }
         .Properties-bg-2{
             background-color:lightgreen;
