@@ -21,13 +21,14 @@
         .filter-box {
             position:fixed;
             top: 55px;
-            background-color: #333333;
-            color: #ffffff;
+            background: -moz-linear-gradient(#8A2BE2, lightblue );
+            color:  white;
             
             height:91vh;
             padding-top: 15px;
             overflow-y: scroll;
             border: 1px solid #555555;
+
         }
 
         .content-header-align > h3{
@@ -45,7 +46,9 @@
             
         }
         .content-box-2 {
-            margin: 5px auto;            
+            margin: 5px auto;
+            margin-right:25px;  
+            padding-bottom:25px;        
         }
         
         .boxes-2{
@@ -56,7 +59,7 @@
         }
         .bg-content {
             background: lightgray;
-            background:-moz-linear-gradient(lightgray, white);
+            background:-moz-linear-gradient(lightgray, #F8F8FF);
             
             color: #ddaaaa;
             min-height: 50vh;
@@ -86,9 +89,7 @@
         .Empty{
             background-color:  black;
         }
-        .AddNewContent{
-
-        }
+        
         .Update{
             display:none;
         }
@@ -107,12 +108,12 @@
             margin: 5px;
             padding: 5px;
         }
+        .Vote-Cell{
+            padding:5px;
+        }
         .Properties-bg-1{
-            background-color:lightcoral;
-            background: -moz-linear-gradient( lightgray, white);
-            border-radius:5px;
-            margin: 5px;
-            padding: 5px;
+            background: -moz-linear-gradient( lightgray, #F8F8FF);
+            
         }
         .Properties-bg-2{
             background-color:lightgreen;
@@ -122,3 +123,33 @@
             background-color:lightblue;
             border-radius:5px;
         }
+        .table-body{
+            display:inline-table;
+        }
+        .table-row{
+            display:table-row;
+        }
+        .table-cell{
+            display:table-cell;
+        }
+        .color-header{
+            
+            background:#FFD700;
+        }
+        .color-header a{
+            color: blue !important;
+            
+        }
+        .body-content{
+            background:#F8F8FF;
+            padding:30px 0 30px;
+            
+        }
+        body{
+            background:#F8F8FF;
+            
+        }
+        .video-1{
+            margin:10px;
+        }
+        

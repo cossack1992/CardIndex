@@ -32,13 +32,13 @@
 
                 }
                 
-                    <div class="col-md-8">
+                    <div class="col-md-8 table-body">
                         
-                            <div class="Properties-bg-1">
-                                <div>
+                            <div class="table-row Properties-bg-1">
+                                <div class="table-cell">
                                     @Html.LabelFor(x => Model.Directors)
                                 </div>
-                                <div>
+                                <div class="table-cell">
                                     @foreach (var li in Model.Directors)
                                     {
                                         if (li != "")
@@ -55,11 +55,11 @@
 
 
 
-                            <div class="Properties-bg-1">
-                                <div>
+                            <div class="table-row Properties-bg-1">
+                                <div class="table-cell">
                                     @Html.LabelFor(x => Model.Writers)
                                 </div>
-                                <div>
+                                <div class="table-cell">
                                     @foreach (var li in Model.Writers)
                                     {
                                         if (li != "")
@@ -71,11 +71,11 @@
                             </div>
 
 
-                            <div class="Properties-bg-1">
-                                <div>
+                            <div class="table-row Properties-bg-1">
+                                <div class="table-cell">
                                     @Html.LabelFor(x => Model.Genres)
                                 </div>
-                                <div>
+                                <div class="table-cell">
                                     @foreach (var li in Model.Genres)
                                     {
                                         if (li != "")
@@ -85,29 +85,37 @@
                                     }
                                 </div>
                             </div>
-                            <div class="Properties-bg-1">
+                            <div class=" table-row Properties-bg-1">
                                 @if (Model.Language != "")
                                 {
-                                    <span>
+                                    <span class="table-cell">
                                         @Html.LabelFor(x => Model.Language)
+                                    </span>
+
+                                    <span class="table-cell">
                                         @Html.ActionLink(Model.Language, "Index", new { types = ViewBag.Types, page = 1, filter = "language", value = Model.Language }, new { @class = "btn btn-default" })
                                     </span>
                                 }
                             </div>
-                            <div class="Properties-bg-1">
+                            <div class=" table-row Properties-bg-1">
                                 @if (Model.Transletor != "")
                                 {
-                                    <span>
+                                    <span class="table-cell">
                                         @Html.LabelFor(x => Model.Transletor)
+                                        </span>
+
+                                        <span class="table-cell">
                                         @Html.ActionLink(Model.Transletor, "Index", new { types = ViewBag.Types, page = 1, filter = "transletor", value = Model.Transletor }, new { @class = "btn btn-default" })
                                     </span>
                                 }
                             </div>
-                            <div class="Properties-bg-1">
+                            <div class=" table-row Properties-bg-1">
                                 @if (Model.Year != "")
                                 {
+                                    <span class="table-cell">
                                     @Html.LabelFor(x => Model.Year)
-                                    <span>
+                                        </span>
+                                    <span class="table-cell">
                                         @Html.ActionLink(Model.Year, "Index", new { types = ViewBag.Types, page = 1, filter = "year", value = Model.Year }, new { @class = "btn btn-default" })
                                     </span>
                                 }
@@ -127,16 +135,19 @@
             </div>
 
         <div class="row ">
-            <div class="col-md-4 video">
-                <div class="Vote">
-<span class="VoteUp">
-    @Html.Label(Model.VoteUp.ToString())
-    @Html.LabelFor(x => Model.VoteUp)
-    </span>
-    @if (User.Identity.IsAuthenticated)
-    {
-        <span>
-        @Ajax.ActionLink("Up", "DisplayFullContent", new { id = Model.Id },
+            <div class="col-md-4">
+                <div class="row Vote">
+                    <div class="Vote-Cell col-md-3">
+                        <span class="VoteUp">
+                            @Html.Label(Model.VoteUp.ToString())
+                            @Html.LabelFor(x => Model.VoteUp)
+                        </span>
+                        </div>
+                        <div class="Vote-Cell col-md-3">
+                            @if (User.Identity.IsAuthenticated)
+                            {
+                                <span>
+                                    @Ajax.ActionLink("Up", "DisplayFullContent", new { id = Model.Id },
        new AjaxOptions
        {
            UpdateTargetId = Model.Id.ToString(),
@@ -145,16 +156,20 @@
            Url = Url.Action("MakeVote", "Home", new { user = User.Identity.Name, vote = 1, id = Model.Id })
 
        }, new { @class = "btn btn-default" })
-                </span>
-    }
+                                </span>
+                            }
+                        </div>
+                    <div class="Vote-Cell col-md-3">
                         <span class="VoteDown">
                             @Html.Label(Model.VoteDown.ToString())
                             @Html.LabelFor(x => Model.VoteDown)
-                            </span>
-@if (User.Identity.IsAuthenticated)
-{
-    <span>
-                            @Ajax.ActionLink("Down", "DisplayFullContent", new { id = Model.Id },
+                        </span>
+                        </div>
+                    <div class="Vote-Cell col-md-3">
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <span>
+                                @Ajax.ActionLink("Down", "DisplayFullContent", new { id = Model.Id },
        new AjaxOptions
        {
            UpdateTargetId = Model.Id.ToString(),
@@ -163,25 +178,12 @@
            Url = Url.Action("MakeVote", "Home", new { user = User.Identity.Name, vote = -1, id = Model.Id })
 
        }, new { @class = "btn btn-default" })
-                        </span>
+                            </span>
 
-                    }
-
-                </div>
-                <div>
-                    @if (Model.Type == "Video")
-                {
-                        <video class="Video" id="@Model.Path" width="320" height="240" preload="none" controls="controls">
-                            <source src="@Url.Action("GetVideo", "Home", new { Model.Path })" type='video/webm; codecs="vp8, vorbis"' /> HTML5 Video not supported!
-                        </video>
-                    }
-                    else if (Model.Type == "Audio")
-                    {
-                        <audio id="@Model.Path" preload="none" controls="controls">
-                            <source src="~/AppContent/@Model.Path" type="audio/mp3">
-                        </audio>
-                    }
-                </div>
+                        }
+                    </div>
+                        </div>
+                
 
             </div>
             <div class="col-md-6">
@@ -248,7 +250,23 @@
 
             </div>
         </div>
-        
+        <div class="row video-1">
+            <div class="col-md-6 col-lg-offset-3">
+                @if (Model.Type == "Video")
+                {
+                    <video id="@Model.Path" width=480 height=360 preload="none" controls="controls">
+                        <source src="@Url.Action("GetVideo", "Home", new { Model.Path })" type='video/webm; codecs="vp8, vorbis"' /> HTML5 Video not supported!
+                    </video>
+                }
+                else if (Model.Type == "Audio")
+                {
+                    <audio id="@Model.Path" preload="none" controls="controls">
+                        <source src="~/AppContent/@Model.Path" type="audio/mp3">
+                    </audio>
+                }
+            </div>
+        </div>
+
     </div>
         
 </div>
