@@ -21,7 +21,7 @@
         .filter-box {
             position:fixed;
             top: 55px;
-            background: -moz-linear-gradient(#8A2BE2, lightblue );
+            background: -moz-linear-gradient( blue, #8A2BE2 );
             color:  white;
             
             height:91vh;
