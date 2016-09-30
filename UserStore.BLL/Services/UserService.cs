@@ -24,6 +24,10 @@ namespace UserStore.BLL.Services
         }
         public  async Task<OperationDetails> CreateUser (UserDTO userDTO)
         {
+            if(userDTO != null)
+            {
+
+            
             try
             {
 
@@ -39,31 +43,49 @@ namespace UserStore.BLL.Services
                     await DataBase.SaveAsync();
                     return new OperationDetails(true, "registration succedeed ", "");
                 }
-                else
+                    else
+                    {
+                        throw new ArgumentOutOfRangeException();
+                    }
+                }
+                catch (ArgumentOutOfRangeException)
                 {
-                    return new OperationDetails(false, "Пользователь с таким логином уже существует", "Email");
+                    throw;
+                }
+                catch (Exception)
+                {
+                    throw new DataAcssessException();
                 }
             }
-            catch
+            else
             {
-                return new OperationDetails(true, "registration failed ", "");
+                throw new ArgumentNullException();
             }
         }
         public async Task<ClaimsIdentity> Autenticate(UserDTO userDTO)
         {
-            ClaimsIdentity claim = null;
-            try
+            if (userDTO != null)
             {
-                ApplicationUser user = await DataBase.UserManager.FindAsync(userDTO.Email, userDTO.Password);
-                if (user != null)
+
+
+                ClaimsIdentity claim = null;
+                try
                 {
-                    claim = await DataBase.UserManager.CreateIdentityAsync(user, DefaultAuthenticationTypes.ApplicationCookie);
+                    ApplicationUser user = await DataBase.UserManager.FindAsync(userDTO.Email, userDTO.Password);
+                    if (user != null)
+                    {
+                        claim = await DataBase.UserManager.CreateIdentityAsync(user, DefaultAuthenticationTypes.ApplicationCookie);
+                    }
+                    return claim;
                 }
-                return claim;
+                catch (Exception)
+                {
+                    throw new DataAcssessException();
+                }
             }
-            catch
+            else
             {
-                return null;
+                throw new ArgumentNullException();
             }
         }
         public async Task SetInitialUserData(UserDTO adminDTO, List<string> roles)
@@ -81,9 +103,9 @@ namespace UserStore.BLL.Services
                 }
                 await CreateUser(adminDTO);
             }
-            catch
+            catch (Exception)
             {
-                throw;
+                throw new DataAcssessException();
             }
         }
         public void Dispose()

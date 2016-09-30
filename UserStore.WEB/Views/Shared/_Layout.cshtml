@@ -27,28 +27,28 @@
                     <li>@Html.ActionLink("Home", "Index", "Home")</li>
                     <li>@Html.ActionLink("About", "About", "Home")</li>
                     <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-                    
+
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
-                    @if (User.IsInRole("admin") )
+                    @if (User.IsInRole("admin"))
                     {
                         <li>@Html.ActionLink("Moderator", "AdminIndex", "Home")</li>
                     }
                     @if (!User.Identity.IsAuthenticated)
                     {
-                        <li>@Html.ActionLink("Войти", "Login", "Account")</li>
-                        <li>@Html.ActionLink("Регистрация", "Register", "Account")</li>
+                        <li>@Html.ActionLink("Enter", "Login", "Account")</li>
+                        <li>@Html.ActionLink("Registration", "Register", "Account")</li>
                     }
-                    
+
                     else
                     {
                         <li>@Html.ActionLink("Create new Content", "StartNewContent", "ContentOperation")</li>
                         <li>
 
 
-                            <a>Привет @User.Identity.Name</a>
+                            <a>Hello, @User.Identity.Name</a>
                         </li>
-                        <li>@Html.ActionLink("Выход", "Logout", "Account")</li>
+                        <li>@Html.ActionLink("Excit", "Logout", "Account")</li>
 
                     }
 

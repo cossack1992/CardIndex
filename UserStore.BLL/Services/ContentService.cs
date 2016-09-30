@@ -7,6 +7,7 @@ using UserStore.BLL.Interfaces;
 using UserStore.DAL.Interfaces;
 using UserStore.BLL.DTO;
 using UserStore.BLL.Infrastructure;
+using UserStore.BLL.Convert;
 using System.Data.Entity;
 
 namespace UserStore.BLL.Services
@@ -53,17 +54,25 @@ namespace UserStore.BLL.Services
                     }
                     else
                     {
-                        return new OperationDetails(false, "Content is empty ", "");
+                        throw new ArgumentOutOfRangeException();
                     }
                 }
-                catch
+                catch(ArgumentOutOfRangeException)
                 {
-                    return new OperationDetails(false, "updating failed ", "");
+                    throw;
+                }
+                catch(ConvertDTOException)
+                {
+                    throw;
+                }
+                catch(Exception)
+                {
+                    throw new DataAcssessException();
                 }
             }
             else
             {
-                return new OperationDetails(false, "Content is empty ", "");
+                throw new ArgumentNullException();
             }
         }
         public async Task<OperationDetails> CreateContent(ContentDTO contentDTO)
@@ -85,65 +94,73 @@ namespace UserStore.BLL.Services
                     }
                     else
                     {
-                        return new OperationDetails(false, "Content is already exist ", "");
+                        throw new ArgumentOutOfRangeException();
                     }
                 }
-                catch
+                catch (ArgumentOutOfRangeException)
                 {
-                    return new OperationDetails(false, "Creation failed ", "");
+                    throw;
+                }
+                catch (ConvertDTOException)
+                {
+                    throw;
+                }
+                catch (Exception)
+                {
+                    throw new DataAcssessException();
                 }
             }
             else
             {
-                return new OperationDetails(false, "Content is empty ", "");
+                throw new ArgumentNullException();
             }
         }
 
         private async Task SetProtertiesForContent(ContentDTO contentDTO)
         {
-            
-            foreach (var li in contentDTO.Directors)
+            try
             {
-                var director = await DataBase.DirectorManager.Get(li);
-                if (director == null)
+                foreach (var li in contentDTO.Directors)
                 {
-                    await DataBase.DirectorManager.SetNew(li);
+                    var director = await DataBase.DirectorManager.Get(li);
+                    if (director == null)
+                    {
+                        await DataBase.DirectorManager.SetNew(li);
+                    }
                 }
-            }
-            foreach (var li in contentDTO.Genres)
-            {
-                var genre = (await DataBase.GenreManager.Get(li));
-                if (genre == null)
+                foreach (var li in contentDTO.Genres)
                 {
-                    await DataBase.GenreManager.SetNew(li);
+                    var genre = (await DataBase.GenreManager.Get(li));
+                    if (genre == null)
+                    {
+                        await DataBase.GenreManager.SetNew(li);
+                    }
                 }
-            }
 
-            foreach (var li in contentDTO.Writers)
-            {
-                var scenarist = await DataBase.ScenaristManager.Get(li);
-                if (scenarist == null)
+                foreach (var li in contentDTO.Writers)
                 {
-                    await DataBase.ScenaristManager.SetNew(li);
+                    var scenarist = await DataBase.ScenaristManager.Get(li);
+                    if (scenarist == null)
+                    {
+                        await DataBase.ScenaristManager.SetNew(li);
+                    }
+                }
+
+                
+                var transletor = await DataBase.TrasletorManager.Get(contentDTO.Transletor);
+                if (transletor == null)
+                {
+                    await DataBase.TrasletorManager.SetNew(contentDTO.Transletor);
+                }
+                var language = await DataBase.LanguageManager.Get(contentDTO.Language);
+                if (language == null)
+                {
+                    await DataBase.LanguageManager.SetNew(contentDTO.Language);
                 }
             }
-
-            //foreach (var li in contentDTO.Images)
-            //{
-            //    if (li != null)
-            //    {
-            //        await DataBase.ImageManager.SetNew(li.Name, li.Path);
-            //    }
-            //}
-            var transletor = await DataBase.TrasletorManager.Get(contentDTO.Transletor);
-            if (transletor == null)
+            catch(Exception)
             {
-                await DataBase.TrasletorManager.SetNew(contentDTO.Transletor);
-            }
-            var language = await DataBase.LanguageManager.Get(contentDTO.Language);
-            if (language == null)
-            {
-                await DataBase.LanguageManager.SetNew(contentDTO.Language);
+                throw new DataAcssessException();
             }
         }
 
@@ -155,9 +172,9 @@ namespace UserStore.BLL.Services
                 return new OperationDetails(true, "removal succeeded ", "");
 
             }
-            catch
+            catch (Exception)
             {
-                return new OperationDetails(false, "removal failed", "");
+                throw new DataAcssessException();
             }
         }
 
@@ -172,9 +189,9 @@ namespace UserStore.BLL.Services
                 return new OperationDetails(true, "updating of check succeeded ", "");
 
             }
-            catch
+            catch (Exception)
             {
-                return new OperationDetails(false, "updating of check failed", "");
+                throw new DataAcssessException();
             }
         }
 
@@ -195,9 +212,9 @@ namespace UserStore.BLL.Services
                 foreach (var li in await DataBase.GenreManager.GetAll().ToListAsync()) list.Add(li.Name);
                 return list;
             }
-            catch
+            catch (Exception)
             {
-                return null;
+                throw new DataAcssessException();
             }
         }
         public async Task<int> GetContentCount(string filter, string value, string types)
@@ -210,9 +227,9 @@ namespace UserStore.BLL.Services
                 var i = await DataBase.ContentManager.Quary(x => listId.Contains(x.Id), types).CountAsync();
                 return i;
             }
-            catch
+            catch (Exception)
             {
-                throw;
+                throw new DataAcssessException();
             }
         }
         public async Task<ContentDTO> GetContent(int id)
@@ -221,9 +238,9 @@ namespace UserStore.BLL.Services
             {
                 return ConvertTypeDTO.Convert(await DataBase.ContentManager.GetContent(id));
             }
-            catch
+            catch (Exception)
             {
-                return null;
+                throw new DataAcssessException();
             }
         }
         public async Task<List<ContentDTO>> GetContent(int page, int pageSize, string filter, string value, string types)
@@ -241,9 +258,13 @@ namespace UserStore.BLL.Services
 
                 return list;
             }
-            catch
+            catch (ConvertDTOException)
             {
                 throw;
+            }
+            catch (Exception)
+            {
+                throw new DataAcssessException();
             }
 
         }
@@ -342,9 +363,9 @@ namespace UserStore.BLL.Services
 
                 return list;
             }
-            catch
+            catch (Exception)
             {
-                throw;
+                throw new DataAcssessException();
             }
 
         }
@@ -367,10 +388,10 @@ namespace UserStore.BLL.Services
                     return new OperationDetails(false, "Voting  failed ", "");
                 }
             }
-            catch
+            catch (Exception)
             {
-                return new OperationDetails(false, "Voting  failed ", "");
-            }           
+                throw new DataAcssessException();
+            }
         }
     }
 }

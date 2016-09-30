@@ -7,18 +7,18 @@
 }
 <div class="row content-box">
     <div class="col-md-12">
-            @if (Model != null)
+        @if (Model != null)
             {
-                <div class="row bg-content-header @Model.Type">
-                    <div class="col-md-12 content-header-align">
-                        @if (Model.Name != "")
-                        {
-                            <h3> @Html.ActionLink(Model.Name, "DisplayFullContent", new { id = Model.Id, filter = ViewBag.Filter })</h3>
-                        }
-                    </div>
+            <div class="row bg-content-header @Model.Type">
+                <div class="col-md-12 content-header-align">
+                    @if (Model.Name != "")
+                    {
+                        <h3> @Html.ActionLink(Model.Name, "DisplayFullContent", new { id = Model.Id, filter = ViewBag.Filter })</h3>
+                    }
                 </div>
-                <div class="row bg-content">
-                    <div class="center">
+            </div>
+            <div class="row bg-content">
+                <div class="center">
                     @foreach (var li in Model.Images)
                 {
                     if (li != null)
@@ -41,9 +41,9 @@
                     </div>
 
                 </div>
-                    </div>
-            }
-        
+            </div>
+        }
+
     </div>
 </div>
 

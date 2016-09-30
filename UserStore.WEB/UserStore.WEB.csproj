@@ -231,6 +231,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\Helper.cs" />
+    <Compile Include="Infrastructure\ExceptionForWEB.cs" />
     <Compile Include="Models\ContentModelInPut.cs" />
     <Compile Include="Models\ContentModelOutPut.cs" />
     <Compile Include="Models\ImageModel.cs" />

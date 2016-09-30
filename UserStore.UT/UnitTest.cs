@@ -4,6 +4,7 @@ using UserStore.BLL.DTO;
 using System.Collections.Generic;
 using UserStore.DAL.Entities;
 using UserStore.WEB.Convert;
+using UserStore.BLL.Convert;
 using UserStore.WEB.Models;
 
 namespace UserStore.UT

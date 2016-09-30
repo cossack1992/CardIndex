@@ -80,9 +80,10 @@
   <ItemGroup>
     <Compile Include="DI\DIBLL.cs" />
     <Compile Include="DTO\ContentDTO.cs" />
-    <Compile Include="DTO\ConvertTypeDTO.cs" />
+    <Compile Include="Convert\ConvertTypeDTO.cs" />
     <Compile Include="DTO\ImageDTO.cs" />
     <Compile Include="DTO\UserDTO.cs" />
+    <Compile Include="Infrastructure\ExceptionForBLL.cs" />
     <Compile Include="Infrastructure\OperationDetails.cs" />
     <Compile Include="Interfaces\IContentService.cs" />
     <Compile Include="Interfaces\IService.cs" />
