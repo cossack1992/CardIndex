@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace UserStore.BLL.Infrastructure
 {
-    public class DataAcssessException : Exception
+    public class DataAccessException : Exception
     {
-        public DataAcssessException() : base() { }
-        public DataAcssessException(string message) : base(message) { }
-        public DataAcssessException(string message, Exception inner) : base(message, inner) { }
+        public DataAccessException() : base() { }
+        public DataAccessException(string message) : base(message) { }
+        public DataAccessException(string message, Exception inner) : base(message, inner) { }
         public override string Message
         {
             get

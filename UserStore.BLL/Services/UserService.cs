@@ -54,7 +54,7 @@ namespace UserStore.BLL.Services
                 }
                 catch (Exception)
                 {
-                    throw new DataAcssessException();
+                    throw new DataAccessException();
                 }
             }
             else
@@ -80,7 +80,7 @@ namespace UserStore.BLL.Services
                 }
                 catch (Exception)
                 {
-                    throw new DataAcssessException();
+                    throw new DataAccessException();
                 }
             }
             else
@@ -105,7 +105,7 @@ namespace UserStore.BLL.Services
             }
             catch (Exception)
             {
-                throw new DataAcssessException();
+                throw new DataAccessException();
             }
         }
         public void Dispose()

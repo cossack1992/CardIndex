@@ -15,7 +15,7 @@ namespace UserStore.BLL.Interfaces
         /// Create and save new User
         /// </summary>
         /// <param name="userDTO"></param>
-        /// /// <exception cref="DataAcssessException"></exception>
+        /// /// <exception cref="DataAccessException"></exception>
         /// <exception cref="ArgumentOutOfRangeException"></exception>
         /// <exception cref="ArgumentNullException"></exception>
         /// <returns></returns>
@@ -24,7 +24,7 @@ namespace UserStore.BLL.Interfaces
         /// Autenticate user
         /// </summary>
         /// <param name="userDTO"></param>
-        /// /// <exception cref="DataAcssessException"></exception>
+        /// /// <exception cref="DataAccessException"></exception>
         /// <exception cref="ArgumentNullException"></exception>
         /// <returns></returns>
         Task<ClaimsIdentity> Autenticate(UserDTO userDTO);

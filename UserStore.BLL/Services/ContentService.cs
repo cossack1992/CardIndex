@@ -67,7 +67,7 @@ namespace UserStore.BLL.Services
                 }
                 catch(Exception)
                 {
-                    throw new DataAcssessException();
+                    throw new DataAccessException();
                 }
             }
             else
@@ -107,7 +107,7 @@ namespace UserStore.BLL.Services
                 }
                 catch (Exception)
                 {
-                    throw new DataAcssessException();
+                    throw new DataAccessException();
                 }
             }
             else
@@ -160,7 +160,7 @@ namespace UserStore.BLL.Services
             }
             catch(Exception)
             {
-                throw new DataAcssessException();
+                throw new DataAccessException();
             }
         }
 
@@ -174,7 +174,7 @@ namespace UserStore.BLL.Services
             }
             catch (Exception)
             {
-                throw new DataAcssessException();
+                throw new DataAccessException();
             }
         }
 
@@ -191,7 +191,7 @@ namespace UserStore.BLL.Services
             }
             catch (Exception)
             {
-                throw new DataAcssessException();
+                throw new DataAccessException();
             }
         }
 
@@ -214,7 +214,7 @@ namespace UserStore.BLL.Services
             }
             catch (Exception)
             {
-                throw new DataAcssessException();
+                throw new DataAccessException();
             }
         }
         public async Task<int> GetContentCount(string filter, string value, string types)
@@ -229,7 +229,7 @@ namespace UserStore.BLL.Services
             }
             catch (Exception)
             {
-                throw new DataAcssessException();
+                throw new DataAccessException();
             }
         }
         public async Task<ContentDTO> GetContent(int id)
@@ -240,7 +240,7 @@ namespace UserStore.BLL.Services
             }
             catch (Exception)
             {
-                throw new DataAcssessException();
+                throw new DataAccessException();
             }
         }
         public async Task<List<ContentDTO>> GetContent(int page, int pageSize, string filter, string value, string types)
@@ -264,7 +264,7 @@ namespace UserStore.BLL.Services
             }
             catch (Exception)
             {
-                throw new DataAcssessException();
+                throw new DataAccessException();
             }
 
         }
@@ -365,7 +365,7 @@ namespace UserStore.BLL.Services
             }
             catch (Exception)
             {
-                throw new DataAcssessException();
+                throw new DataAccessException();
             }
 
         }
@@ -390,7 +390,7 @@ namespace UserStore.BLL.Services
             }
             catch (Exception)
             {
-                throw new DataAcssessException();
+                throw new DataAccessException();
             }
         }
     }
