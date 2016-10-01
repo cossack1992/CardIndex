@@ -59,18 +59,28 @@ namespace UserStore.WEB.Controllers
             {
                 if (file != null)
                 {
-                    if (file.ContentLength > 0)
+                    if (file.ContentType != null)
                     {
-                        string path = "~/AppContent";
-                        var str1 = Path.GetFileName(file.FileName);
-                        string path2 = DateTime.Now.ToString().Replace(" ", "").Replace(":", "").Replace(".", "");
-                        string path3 = Path.Combine(Server.MapPath(path), path2);
-                        if (!Directory.Exists(path3)) Directory.CreateDirectory(path3);
-                        string path4 = Path.Combine(path3, str1);
-                        file.SaveAs(path4);
-                        
-                        return path2 + @"/" + str1;
+                        string type = file.ContentType.ToLower().Split(new char[] { '/' }).FirstOrDefault();
+                        if (type != null &&(type == "video" || type == "audio" || type == "image" || type == "application"))
+                        {
+                            if (file.ContentLength > 0)
+                            {
+                                string path = "~/AppContent";
+                                var str1 = Path.GetFileName(file.FileName);
+                                string path2 = DateTime.Now.ToString().Replace(" ", "").Replace(":", "").Replace(".", "");
+                                string path3 = Path.Combine(Server.MapPath(path), path2);
+                                if (!Directory.Exists(path3)) Directory.CreateDirectory(path3);
+                                string path4 = Path.Combine(path3, str1);
+                                file.SaveAs(path4);
+
+                                return path2 + @"/" + str1;
+                            }
+                            return "";
+                        }
+                        return "";
                     }
+                    return "";
                 }
                  return "";
             }
@@ -90,12 +100,18 @@ namespace UserStore.WEB.Controllers
             
                 if (ModelState.IsValid)
                 {
-                    
-                    OperationDetails det = await Service.CreateContent(ConvertTypeWEB.Convert(Model,  Save(Model.Image),  Save(Model.Path)));
-                    if(det.Succedeed)
-                    return Redirect("/Home/Index");
+                string pathImage = Save(Model.Image);
+                string pathContent = Save(Model.Path);
+                if (pathContent != "" && pathImage != "")
+                {
+                    OperationDetails det = await Service.CreateContent(ConvertTypeWEB.Convert(Model, pathImage, pathContent));
+                    if (det.Succedeed)
+                        return Redirect("/Home/Index");
                     else return View("Error");
                 }
+                ModelState.AddModelError("Enter ", "File has wrong type");
+                return View("NewContent", Model);
+            }
                 else
                 {
                     ModelState.AddModelError("Enter ", "Field(s) is/are empty");

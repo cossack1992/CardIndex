@@ -48,7 +48,7 @@ namespace UserStore.BLL.Services
                         var check = await DataBase.CheckManager.GetCheck(1);
                         contentDTO.Check = check.Name;
                         await SetProtertiesForContent(contentDTO);
-                        await DataBase.ContentManager.UpdateContent(contentDTO.Id, contentDTO.Name, contentDTO.Path, contentDTO.Year, contentDTO.Directors, contentDTO.Writers, contentDTO.Genres, ConvertTypeDTO.Convert(contentDTO.Images), contentDTO.Language, contentDTO.Transletor, contentDTO.Check);
+                        await DataBase.ContentManager.UpdateContent(contentDTO.Id, contentDTO.Name, contentDTO.Year, contentDTO.Directors, contentDTO.Writers, contentDTO.Genres, ConvertTypeDTO.Convert(contentDTO.Images), contentDTO.Language, contentDTO.Transletor, contentDTO.Check);
                         await DataBase.SaveAsync();
                         return new OperationDetails(true, "updating succedeed ", "");
                     }

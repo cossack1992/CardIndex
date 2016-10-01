@@ -30,7 +30,7 @@ namespace UserStore.WEB.App_Start
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
                       "~/Content/site.css",
-                      "~/Content/StylesForHomePage.css"));
+                      "~/Content/StylesForPages.css"));
         }
     }
 }

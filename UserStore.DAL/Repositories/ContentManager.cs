@@ -37,7 +37,6 @@ namespace UserStore.DAL.Repositories
                 case ".MP3":
                     DataBase.Contents.Add(new Audio { Name = name, Path = path, Check = localCheck, Directors = localDirectors, Genres = localGenres, Images = images, Writers = localWriters, Year = year, Language = localLanguage, Transletor = localTransletor });
                     break;
-                case ".MP4":
                 case ".WEBM":
                     DataBase.Contents.Add(new Video { Name = name, Path = path, Check = localCheck, Directors = localDirectors, Genres = localGenres, Images = images, Writers = localWriters, Year = year, Language = localLanguage, Transletor = localTransletor });
                     break;
@@ -242,7 +241,7 @@ namespace UserStore.DAL.Repositories
             return loc;
         }
 
-        public async Task UpdateContent(int id, string name, string path, string year, IList<string> directors, IList<string> writers, IList<string> genres, IList<Image> list, string language, string transletor, string check)
+        public async Task UpdateContent(int id, string name, string year, IList<string> directors, IList<string> writers, IList<string> genres, IList<Image> list, string language, string transletor, string check)
         {            
             AbstractContent content = await DataBase.Contents.Where(x=>x.Id == id).FirstOrDefaultAsync();
             

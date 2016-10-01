@@ -45,7 +45,7 @@ namespace UserStore.BLL.Services
                 }
                     else
                     {
-                        throw new ArgumentOutOfRangeException();
+                        return new OperationDetails(false, "registration failed ", "");
                     }
                 }
                 catch (ArgumentOutOfRangeException)

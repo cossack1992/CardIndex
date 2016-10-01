@@ -86,8 +86,8 @@
         </div>
         @if (Model.PageInfo.TotalItems != 1)
         {
-        <div class="row">
-            <div class="col-md-1 btn-group padding">
+        
+            <div class="btn-group padding">
                 @Ajax.PageLinks(new AjaxOptions
            {
                UpdateTargetId = "contents",
@@ -97,7 +97,7 @@
            },
                        Model.PageInfo, x => Url.Action("Index", new { types = Model.Types, page = x, filter = Model.Filter, value = Model.Value }))
             </div>
-        </div>
+        
         }
     </div>
 

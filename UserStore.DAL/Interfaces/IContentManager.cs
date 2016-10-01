@@ -119,7 +119,6 @@ namespace UserStore.DAL.Interfaces
         /// </summary>
         /// <param name="id"></param>
         /// <param name="name"></param>
-        /// <param name="path"></param>
         /// <param name="year"></param>
         /// <param name="directors"></param>
         /// <param name="writers"></param>
@@ -129,6 +128,6 @@ namespace UserStore.DAL.Interfaces
         /// <param name="transletor"></param>
         /// <param name="check"></param>
         /// <returns></returns>
-        Task UpdateContent(int id, string name, string path, string year, IList<string> directors, IList<string> writers, IList<string> genres, IList<Image> list, string language, string transletor, string check);
+        Task UpdateContent(int id, string name, string year, IList<string> directors, IList<string> writers, IList<string> genres, IList<Image> list, string language, string transletor, string check);
     }
 }
