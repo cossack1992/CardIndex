@@ -37,7 +37,7 @@ namespace UserStore.WEB.Controllers
         }
         
         [HttpGet]
-        [HandleError(View = "Error")]
+        [HandleError()]
         public   ActionResult Search(string Search, string[] genres, string[] typ)
         {
                                            
@@ -54,7 +54,7 @@ namespace UserStore.WEB.Controllers
             
         }
         [Authorize]
-        [HandleError(View = "Error")]
+        [HandleError()]
         public async Task<ActionResult> MakeVote( string user, int? vote, int id = 0)
         {
             OperationDetails details;
@@ -67,7 +67,7 @@ namespace UserStore.WEB.Controllers
             
         }
         [Authorize(Roles = "admin")]
-        [HandleError(View = "Error")]
+        [HandleError()]
         public async Task<ActionResult> MakeCheck(int id = 0, int check = 0)
         {
             OperationDetails details;            
@@ -80,7 +80,7 @@ namespace UserStore.WEB.Controllers
         }
         [Authorize(Roles = "admin")]
         [HttpPost]
-        [HandleError( View = "Error")]
+        [HandleError()]
         public async Task<ActionResult> DeleteContent(int id = 0, int check = 0)
         {
             OperationDetails details;
@@ -92,7 +92,7 @@ namespace UserStore.WEB.Controllers
 
         }
         [Authorize(Roles = "admin")]
-        [HandleError(View = "Error")]
+        [HandleError()]
         public  ActionResult UpdateContent(int id = 0)
         {
                           
@@ -100,7 +100,7 @@ namespace UserStore.WEB.Controllers
             
 
         }
-        [HandleError(View = "Error")]
+        [HandleError()]
         public async Task<ActionResult> DisplayFullContent( int id, string types = "Book;Audio;Video;Empty", int page = 1, string filter = "home", string value = "")
         {
 
@@ -116,7 +116,7 @@ namespace UserStore.WEB.Controllers
             return View("Index", ivm);
             
         }
-        [HandleError(View = "Error")]
+        [HandleError()]
         public ActionResult GetVideo(string path)
         {
 
@@ -127,7 +127,7 @@ namespace UserStore.WEB.Controllers
             }
             else return View("Error");
         }
-        [HandleError(View = "Error")]
+        [HandleError()]
         public async Task<ActionResult> Index(string types =  "Book;Audio;Video;Empty" , int page = 1, string filter = "home", string value = "")
         {
             ViewBag.Page = page;
@@ -153,7 +153,7 @@ namespace UserStore.WEB.Controllers
 
         }
         [Authorize(Roles = "admin")]
-        [HandleError(View = "Error")]
+        [HandleError()]
         public async Task<ActionResult> AdminIndex(string types = "Book;Audio;Video;Empty", int page = 1, string filter = "admin", string value = "")
         {
            
@@ -171,7 +171,7 @@ namespace UserStore.WEB.Controllers
            
         }
         [Authorize]
-        [HandleError(View = "Error")]
+        [HandleError()]
         public ActionResult Download(string name, string filePath)
         {
             

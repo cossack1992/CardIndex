@@ -94,7 +94,7 @@ namespace UserStore.WEB.Controllers
         [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [HandleError(View = "Error")]
+        [HandleError()]
         public async Task<ActionResult> AddNewContent(ContentModelInPut Model)
         {
             
@@ -120,7 +120,7 @@ namespace UserStore.WEB.Controllers
             
         }
         [Authorize(Roles = "admin")]
-        [HandleError(View = "Error")]
+        [HandleError()]
         public async Task<ActionResult> UpdateContent(int id)
         {
             ContentModelInPut model;
@@ -131,7 +131,7 @@ namespace UserStore.WEB.Controllers
         [Authorize(Roles = "admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [HandleError(View = "Error")]
+        [HandleError()]
         public async Task<ActionResult> Update(ContentModelInPut Model)
         {
             

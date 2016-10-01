@@ -50,7 +50,8 @@ namespace UserStore.BLL.Services
                         await SetProtertiesForContent(contentDTO);
                         await DataBase.ContentManager.UpdateContent(contentDTO.Id, contentDTO.Name, contentDTO.Year, contentDTO.Directors, contentDTO.Writers, contentDTO.Genres, ConvertTypeDTO.Convert(contentDTO.Images), contentDTO.Language, contentDTO.Transletor, contentDTO.Check);
                         await DataBase.SaveAsync();
-                        return new OperationDetails(true, "updating succedeed ", "");
+                        throw new ArgumentOutOfRangeException();
+                        //return new OperationDetails(true, "updating succedeed ", "");
                     }
                     else
                     {
@@ -255,7 +256,7 @@ namespace UserStore.BLL.Services
 
 
                 foreach (var li in await DataBase.ContentManager.Quary(x => listId.Contains(x.Id), types).OrderByDescending(x => x.VoteUp).Skip((page - 1) * pageSize).Take(pageSize).ToListAsync()) list.Add(ConvertTypeDTO.Convert(li));
-
+                
                 return list;
             }
             catch (ConvertDTOException)

@@ -40,7 +40,7 @@ namespace UserStore.WEB.Controllers
         
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [HandleError(View = "Error")]
+        [HandleError()]
         public async Task<ActionResult> Login(LoginModel model)
         {
             await SetInitialDataAsync();
@@ -61,6 +61,7 @@ namespace UserStore.WEB.Controllers
             }
             return View(model);
         }
+        [HandleError()]
         public ActionResult LogOut()
         {
             AuthenticationManager.SignOut();
@@ -72,7 +73,7 @@ namespace UserStore.WEB.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [HandleError(View = "Error")]
+        [HandleError()]
         public async Task<ActionResult> Register(RegisterModel model)
         {
             
