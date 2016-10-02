@@ -247,7 +247,7 @@ namespace UserStore.DAL.Repositories
             
                         
             content.Name = name;
-            content.Check = await DataBase.Checks.Where(x => x.Name == check).FirstOrDefaultAsync(); ;
+            content.Check = await DataBase.Checks.Where(x => x.Name == check).FirstOrDefaultAsync();
             content.Directors = await DataBase.Directors.Where(x => directors.Contains(x.Name)).ToListAsync();
             content.Genres = await DataBase.Genres.Where(x => genres.Contains(x.Name)).ToListAsync();
             if(list.Count > 0)

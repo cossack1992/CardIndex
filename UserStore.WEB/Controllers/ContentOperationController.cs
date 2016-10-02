@@ -137,7 +137,9 @@ namespace UserStore.WEB.Controllers
             
                 if (ModelState.IsValid)
                 {
-                    OperationDetails det = await Service.UpdateContent(ConvertTypeWEB.Convert(Model,  Save(Model.Image),  Save(Model.Path)));
+                string pathImage = Save(Model.Image);
+   
+                OperationDetails det = await Service.UpdateContent(ConvertTypeWEB.Convert(Model, pathImage, ""));
                     if (det.Succedeed)
                         return Redirect("/Home/Index");
                     else return View("Error");

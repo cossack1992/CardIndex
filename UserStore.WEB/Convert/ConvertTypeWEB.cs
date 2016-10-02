@@ -24,8 +24,8 @@ namespace UserStore.WEB.Convert
                     foreach (var i in model.Writers.Split(new char[] { ';', ',', '.', ':' })) newContent.Writers.Add(i.ToLower());
                     foreach (var i in model.Genres.Split(new char[] { ';', ',', '.', ':' })) newContent.Genres.Add(i.ToLower());
                     newContent.Id = model.Id;
-                    if (imagePath != "") newContent.Images.Add(new ImageDTO { Name = model.Image.FileName.ToLower(), Path = imagePath });
-                    newContent.Path = path;
+                    if (imagePath != "" && imagePath != null) newContent.Images.Add(new ImageDTO { Name = model.Image.FileName.ToLower(), Path = imagePath });
+                    if (path != null) newContent.Path = path;
                     newContent.Transletor = model.Transletor.ToLower();
                     newContent.Language = model.Language.ToLower();
                     newContent.Year = model.Year.ToString();
