@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace UserStore.DAL.Entities
 {
-    class Empty : AbstractContent
+    public class Empty : AbstractContent
     {
         
     }
