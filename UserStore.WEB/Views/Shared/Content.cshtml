@@ -125,7 +125,7 @@
                     <div>
                         @if (User.Identity.IsAuthenticated && Model.Path != "")
                         {
-                            @Html.ActionLink("Download", "Download", new { name = Model.Name, filePath = Model.Path }, new { @class = "btn btn-default" })
+                            @Html.ActionLink("Download", "Download", new { name = Model.Name, filePath = Model.Path }, new { @class = "color-green btn btn-default" })
                         }
                     </div>
 
@@ -155,7 +155,7 @@
            HttpMethod = "GET",
            Url = Url.Action("MakeVote", "Home", new { user = User.Identity.Name, vote = 1, id = Model.Id })
 
-       }, new { @class = "btn btn-default" })
+       }, new { @class = "color-green btn btn-default" })
                                 </span>
                             }
                         </div>
@@ -177,7 +177,7 @@
            HttpMethod = "GET",
            Url = Url.Action("MakeVote", "Home", new { user = User.Identity.Name, vote = -1, id = Model.Id })
 
-       }, new { @class = "btn btn-default" })
+       }, new { @class = "color-red btn btn-default" })
                                 </span>
 
                             }
@@ -225,7 +225,7 @@
                                 <div>
                                     <span>
 
-                                        @Html.ActionLink("Update", "UpdateContent", new { Id = Model.Id }, new { @class = "btn btn-default" })
+                                        @Html.ActionLink("Update", "UpdateContent", new { Id = Model.Id }, new { @class = "color-orange btn btn-default" })
                                     </span>
                                     <span id="@Model.Id.ToString()-delete">
                                         @Ajax.ActionLink("Delete", "Index", new { types = ViewBag.Types, page = ViewBag.Page, filter = ViewBag.Filter, value = ViewBag.Value },
@@ -237,7 +237,7 @@
                                    HttpMethod = "Post",
                                    Url = Url.Action("DeleteContent", "Home", new { id = Model.Id, check = 3 })
                                }
-                               , new { @class = "btn btn-default" }
+                               , new { @class = "color-red btn btn-default" }
                                    )
 
                                     </span>

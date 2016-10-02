@@ -158,4 +158,30 @@ ul{
         .video-1{
             margin:10px;
         }
+        .color-red{
+            color:white !important;
+            background-color:#FF0700;
+
+        }
+        .color-green{
+            color:white !important;
+            background-color:#2DD700;
+        }
+        .color-red:hover{
+            background-color:darkred;
+
+        }
+        .color-green:hover{
+            background-color:darkgreen;
+        }
+        .color-orange{
+            color:white !important;
+            background-color:#FF9900;
+        }
+        .color-orange:hover{
+            
+            background-color:#FF7100;
+        }
+        
+        
         
