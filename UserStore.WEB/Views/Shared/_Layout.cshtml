@@ -36,7 +36,7 @@
                     }
                     @if (!User.Identity.IsAuthenticated)
                     {
-                        <li>@Html.ActionLink("Enter", "Login", "Account")</li>
+                        <li>@Html.ActionLink("Sing In", "Login", "Account")</li>
                         <li>@Html.ActionLink("Registration", "Register", "Account")</li>
                     }
 
@@ -48,7 +48,7 @@
 
                             <a>Hello, @User.Identity.Name</a>
                         </li>
-                        <li>@Html.ActionLink("Excit", "Logout", "Account")</li>
+                        <li>@Html.ActionLink("Sing Out", "Logout", "Account")</li>
 
                     }
 
