@@ -254,8 +254,8 @@ namespace UserStore.BLL.Services
             {
                 listId = await GetListId(filter, listId, valueList);
 
-
-                foreach (var li in await DataBase.ContentManager.Quary(x => listId.Contains(x.Id), types).OrderByDescending(x => x.VoteUp).Skip((page - 1) * pageSize).Take(pageSize).ToListAsync()) list.Add(ConvertTypeDTO.Convert(li));
+                
+                foreach (var li in (await DataBase.ContentManager.Quary(x => listId.Contains(x.Id), types).OrderByDescending(x => x.VoteUp).Skip((page - 1) * pageSize).Take(pageSize).ToListAsync())) list.Add(ConvertTypeDTO.Convert(li));
                 
                 return list;
             }

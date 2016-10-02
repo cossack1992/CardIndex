@@ -210,32 +210,32 @@ namespace UserStore.DAL.Repositories
 
         public IQueryable<AbstractContent> Quary(Expression<Func<AbstractContent, bool>> quary, string types)
         {
-            IQueryable<AbstractContent> loc = null;
-            foreach(var type in types.Split(new char[] { ';'}))
+            IQueryable<AbstractContent> loc = loc = DataBase.Contents.Include(x => x.Images).Include(x => x.Directors).Include(x => x.Genres).Include(x => x.Writers).Include(x => x.Check).Include(x => x.Language).Include(x => x.Transletor).Where(quary);
+            string[] baseTypes = { "Book", "Audio", "Video", "Empty" };
+            foreach (var type in baseTypes)
             {
-                switch(type)
+                if (!types.Split(new char[] { ';' }).Contains(type))
                 {
-                    case "Audio":
-                        loc = loc == null ? loc = DataBase.Contents.Include(x => x.Images).Include(x => x.Directors).Include(x => x.Genres).Include(x => x.Writers).Include(x => x.Check).Include(x => x.Language).Include(x => x.Transletor).Where(quary).Where(y => y is Audio)
-                            : loc.Concat(DataBase.Contents.Include(x => x.Images).Include(x => x.Directors).Include(x => x.Genres).Include(x => x.Writers).Include(x => x.Check).Include(x => x.Language).Include(x => x.Transletor).Where(quary).Where(y => y is Audio));
-                        break;
-                    case "Video":
-                        loc = loc == null ? loc = DataBase.Contents.Include(x => x.Images).Include(x => x.Directors).Include(x => x.Genres).Include(x => x.Writers).Include(x => x.Check).Include(x => x.Language).Include(x => x.Transletor).Where(quary).Where(y => y is Video)
-                            : loc.Concat(DataBase.Contents.Include(x => x.Images).Include(x => x.Directors).Include(x => x.Genres).Include(x => x.Writers).Include(x => x.Check).Include(x => x.Language).Include(x => x.Transletor).Where(quary).Where(y => y is Video));
-                        break;
-                    case "Book":
-                        loc = loc == null ? loc = DataBase.Contents.Include(x => x.Images).Include(x => x.Directors).Include(x => x.Genres).Include(x => x.Writers).Include(x => x.Check).Include(x => x.Language).Include(x => x.Transletor).Where(quary).Where(y => y is Book)
-                            : loc.Concat(DataBase.Contents.Include(x => x.Images).Include(x => x.Directors).Include(x => x.Genres).Include(x => x.Writers).Include(x => x.Check).Include(x => x.Language).Include(x => x.Transletor).Where(quary).Where(y => y is Book));
-                        break;
-                    case "Empty":
-                        loc = loc == null ? loc = DataBase.Contents.Include(x => x.Images).Include(x => x.Directors).Include(x => x.Genres).Include(x => x.Writers).Include(x => x.Check).Include(x => x.Language).Include(x => x.Transletor).Where(quary).Where(y => y is Empty)
-                            : loc.Concat(DataBase.Contents.Include(x => x.Images).Include(x => x.Directors).Include(x => x.Genres).Include(x => x.Writers).Include(x => x.Check).Include(x => x.Language).Include(x => x.Transletor).Where(quary).Where(y => y is Empty));
-                        break;
-                    default:
-                        loc = loc == null ? loc = DataBase.Contents.Include(x => x.Images).Include(x => x.Directors).Include(x => x.Genres).Include(x => x.Writers).Include(x => x.Check).Include(x => x.Language).Include(x => x.Transletor).Where(quary).Where(y => false)
-                            : loc.Concat(DataBase.Contents.Include(x => x.Images).Include(x => x.Directors).Include(x => x.Genres).Include(x => x.Writers).Include(x => x.Check).Include(x => x.Language).Include(x => x.Transletor).Where(quary).Where(y => false));
-                        break;
+                    switch (type)
+                    {
+                        case "Audio":
+                            loc = loc.Where(y => !(y is Audio));
 
+                            break;
+                        case "Video":
+                            loc = loc.Where(y => !(y is Video));
+                            break;
+                        case "Book":
+                            loc = loc.Where(y => !(y is Book));
+                            break;
+                        case "Empty":
+                            loc = loc.Where(y => !(y is Empty));
+                            break;
+                        default:
+                            loc = loc.Where(y => false); ;
+                            break;
+
+                    }
                 }
             }
             return loc;

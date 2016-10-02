@@ -57,10 +57,9 @@ namespace UserStore.WEB.Controllers
         {
             try
             {
-                if (file != null)
+                if (file != null && file.ContentType != null)
                 {
-                    if (file.ContentType != null)
-                    {
+                    
                         string type = file.ContentType.ToLower().Split(new char[] { '/' }).FirstOrDefault();
                         if (type != null &&(type == "video" || type == "audio" || type == "image" || type == "application"))
                         {
@@ -76,17 +75,16 @@ namespace UserStore.WEB.Controllers
 
                                 return path2 + @"/" + str1;
                             }
-                            return "";
-                        }
-                        return "";
+                            return null;
+                        
                     }
-                    return "";
+                    return null;
                 }
                  return "";
             }
             catch
             {
-                return "";
+                return null;
             }    
                 
             
@@ -102,7 +100,7 @@ namespace UserStore.WEB.Controllers
                 {
                 string pathImage = Save(Model.Image);
                 string pathContent = Save(Model.Path);
-                if (pathContent != "" && pathImage != "")
+                if (pathContent != null && pathImage != null)
                 {
                     OperationDetails det = await Service.CreateContent(ConvertTypeWEB.Convert(Model, pathImage, pathContent));
                     if (det.Succedeed)
@@ -138,7 +136,7 @@ namespace UserStore.WEB.Controllers
                 if (ModelState.IsValid)
                 {
                 string pathImage = Save(Model.Image);
-   
+                if (pathImage == null) pathImage = "";
                 OperationDetails det = await Service.UpdateContent(ConvertTypeWEB.Convert(Model, pathImage, ""));
                     if (det.Succedeed)
                         return Redirect("/Home/Index");

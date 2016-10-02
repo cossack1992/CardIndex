@@ -143,7 +143,7 @@ namespace UserStore.WEB.Controllers
                     List<ContentModelOutPut> list = new List<ContentModelOutPut>();
                     foreach (var li in await Service.GetContent(page, PageSize, filter, value, types)) list.Add(ConvertTypeWEB.Convert(li));
                     PageModel pageModel = new PageModel { PageNumber = page, PageSize = PageSize, TotalItems = await Service.GetContentCount(filter, value, types) };
-                    IndexViewModel ivm = new IndexViewModel { PageInfo = pageModel, Contents = list, Genres = await Service.GetAllGenres(), Filter = filter, Value = value };
+                    IndexViewModel ivm = new IndexViewModel { PageInfo = pageModel, Contents = list, Genres = await Service.GetAllGenres(), Filter = filter, Value = value, Types = types };
                     return View(ivm);
                 }
                 else
