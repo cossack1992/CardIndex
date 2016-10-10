@@ -35,48 +35,50 @@ namespace UserStore.WEB.Controllers
                 return pageSize;
             }
         }
-        
+
         [HttpGet]
         [HandleError()]
-        public   ActionResult Search(string Search, string[] genres, string[] typ)
+        public ActionResult Search(string Search, string[] genres, string[] typ)
         {
-                                           
-                string value = "";
-                string Types = "";
-                if(genres != null) foreach (var li in genres) value += ";" + li;
-                if(Search != "")value += ";" + Search;
-                if (typ != null) foreach (var li in typ) Types += ";" + li;
-                return RedirectToAction("Index","Home", new {
-                    types = Types != "" ? Types.Remove(0, 1) : "Book;Audio;Video;Empty",
-                    page = 1,
-                    filter = "search",
-                    value = value != "" ? value.ToLower().Remove(0, 1) : "" });
-            
+            //var value = String.Join(";", genres.Concat(new string[] { Search }));
+            string value = "";
+            string Types = "";
+            if (genres != null) foreach (var li in genres) value += ";" + li;
+            if (Search != "") value += ";" + Search;
+            if (typ != null) foreach (var li in typ) Types += ";" + li;
+            return RedirectToAction("Index", "Home", new
+            {
+                types = Types != "" ? Types.Remove(0, 1) : "Book;Audio;Video;Empty",
+                page = 1,
+                filter = "search",
+                value = value != "" ? value.ToLower().Remove(0, 1) : ""
+            });
+
         }
         [Authorize]
         [HandleError()]
-        public async Task<ActionResult> MakeVote( string user, int? vote, int id = 0)
+        public async Task<ActionResult> MakeVote(string user, int? vote, int id = 0)
         {
             OperationDetails details;
-            
-            
-                details =  await Service.MakeVote(id, user, vote);
-                if(details.Succedeed)
+
+
+            details = await Service.MakeVote(id, user, vote);
+            if (details.Succedeed)
                 return PartialView("Content", ConvertTypeWEB.Convert(await Service.GetContent(id)));
-                else return View("Error");
-            
+            else return View("Error");
+
         }
         [Authorize(Roles = "admin")]
         [HandleError()]
         public async Task<ActionResult> MakeCheck(int id = 0, int check = 0)
         {
-            OperationDetails details;            
-                details = await Service.CheckContent(id, check);
-                if (details.Succedeed)
-                    return PartialView("Content", ConvertTypeWEB.Convert(await Service.GetContent(id)));
-                else return View("Error");
+            OperationDetails details;
+            details = await Service.CheckContent(id, check);
+            if (details.Succedeed)
+                return PartialView("Content", ConvertTypeWEB.Convert(await Service.GetContent(id)));
+            else return View("Error");
 
-            
+
         }
         [Authorize(Roles = "admin")]
         [HttpPost]
@@ -93,15 +95,15 @@ namespace UserStore.WEB.Controllers
         }
         [Authorize(Roles = "admin")]
         [HandleError()]
-        public  ActionResult UpdateContent(int id = 0)
+        public ActionResult UpdateContent(int id = 0)
         {
-                          
-                return RedirectToAction("UpdateContent", "ContentOperation", new { id = id });
-            
+
+            return RedirectToAction("UpdateContent", "ContentOperation", new { id = id });
+
 
         }
         [HandleError()]
-        public async Task<ActionResult> DisplayFullContent( int id, string types = "Book;Audio;Video;Empty", int page = 1, string filter = "home", string value = "")
+        public async Task<ActionResult> DisplayFullContent(int id, string types = "Book;Audio;Video;Empty", int page = 1, string filter = "home", string value = "")
         {
 
             ViewBag.Page = page;
@@ -114,7 +116,7 @@ namespace UserStore.WEB.Controllers
             PageModel pageModel = new PageModel { PageNumber = 1, PageSize = PageSize, TotalItems = 1 };
             IndexViewModel ivm = new IndexViewModel { PageInfo = pageModel, Contents = list, Genres = await Service.GetAllGenres() };
             return View("Index", ivm);
-            
+
         }
         [HandleError()]
         public ActionResult GetVideo(string path)
@@ -128,61 +130,62 @@ namespace UserStore.WEB.Controllers
             else return View("Error");
         }
         [HandleError()]
-        public async Task<ActionResult> Index(string types =  "Book;Audio;Video;Empty" , int page = 1, string filter = "home", string value = "")
+        public async Task<ActionResult> Index(string types = "Book;Audio;Video;Empty", int page = 1, string filter = "home", string value = "")
         {
             ViewBag.Page = page;
             ViewBag.Filter = filter;
             ViewBag.Value = value;
             ViewBag.Types = types;
-            
-                
 
 
-                if (filter != "admin")
-                {
-                    List<ContentModelOutPut> list = new List<ContentModelOutPut>();
-                    foreach (var li in await Service.GetContent(page, PageSize, filter, value, types)) list.Add(ConvertTypeWEB.Convert(li));
-                    PageModel pageModel = new PageModel { PageNumber = page, PageSize = PageSize, TotalItems = await Service.GetContentCount(filter, value, types) };
-                    IndexViewModel ivm = new IndexViewModel { PageInfo = pageModel, Contents = list, Genres = await Service.GetAllGenres(), Filter = filter, Value = value, Types = types };
-                    return View(ivm);
-                }
-                else
-                {
-                    return RedirectToAction("AdminIndex", new { types = types, page= page, filter= filter, value= value });
-                }
+
+
+            if (filter != "admin")
+            {
+                List<ContentModelOutPut> list = new List<ContentModelOutPut>();
+                foreach (var li in await Service.GetContent(page, PageSize, filter, value, types))
+                    list.Add(ConvertTypeWEB.Convert(li));
+                PageModel pageModel = new PageModel { PageNumber = page, PageSize = PageSize, TotalItems = await Service.GetContentCount(filter, value, types) };
+                IndexViewModel ivm = new IndexViewModel { PageInfo = pageModel, Contents = list, Genres = await Service.GetAllGenres(), Filter = filter, Value = value, Types = types };
+                return View(ivm);
+            }
+            else
+            {
+                return RedirectToAction("AdminIndex", new { types = types, page = page, filter = filter, value = value });
+            }
 
         }
         [Authorize(Roles = "admin")]
         [HandleError()]
         public async Task<ActionResult> AdminIndex(string types = "Book;Audio;Video;Empty", int page = 1, string filter = "admin", string value = "")
         {
-           
 
 
-                List<ContentModelOutPut> list = new List<ContentModelOutPut>();
-                foreach (var li in await Service.GetContent(page, PageSize, filter, value, types)) list.Add(ConvertTypeWEB.Convert(li));
-                PageModel pageModel = new PageModel { PageNumber = page, PageSize = PageSize, TotalItems = await Service.GetContentCount(filter, value, types) };
-                IndexViewModel ivm = new IndexViewModel { PageInfo = pageModel, Contents = list, Genres = await Service.GetAllGenres(), Filter = filter, Value = value, Types = types };
-                ViewBag.Page = page;
-                ViewBag.Filter = filter;
-                ViewBag.Value = value;
-                ViewBag.Types = types;
-                return View("Index", ivm);
-           
+
+            List<ContentModelOutPut> list = new List<ContentModelOutPut>();
+            foreach (var li in await Service.GetContent(page, PageSize, filter, value, types)) list.Add(ConvertTypeWEB.Convert(li));
+            PageModel pageModel = new PageModel { PageNumber = page, PageSize = PageSize, TotalItems = await Service.GetContentCount(filter, value, types) };
+            IndexViewModel ivm = new IndexViewModel { PageInfo = pageModel, Contents = list, Genres = await Service.GetAllGenres(), Filter = filter, Value = value, Types = types };
+            ViewBag.Page = page;
+            ViewBag.Filter = filter;
+            ViewBag.Value = value;
+            ViewBag.Types = types;
+            return View("Index", ivm);
+
         }
         [Authorize]
         [HandleError()]
         public ActionResult Download(string name, string filePath)
         {
-            
-                string path = Path.Combine(Server.MapPath("~/AppContent"), filePath);
-                if (Directory.Exists(Path.GetDirectoryName(path)))
-                {
-                    return File(path, System.Net.Mime.MediaTypeNames.Application.Octet, name + Path.GetExtension(path));
-                }
-                else return View("Error");
-                
-            
+
+            string path = Path.Combine(Server.MapPath("~/AppContent"), filePath);
+            if (Directory.Exists(Path.GetDirectoryName(path)))
+            {
+                return File(path, System.Net.Mime.MediaTypeNames.Application.Octet, name + Path.GetExtension(path));
+            }
+            else return View("Error");
+
+
         }
         [Authorize(Roles = "admin")]
         public ActionResult About()

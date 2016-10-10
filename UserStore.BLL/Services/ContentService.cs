@@ -48,7 +48,8 @@ namespace UserStore.BLL.Services
                         var check = await DataBase.CheckManager.GetCheck(1);
                         contentDTO.Check = check.Name;
                         await SetProtertiesForContent(contentDTO);
-                        await DataBase.ContentManager.UpdateContent(contentDTO.Id, contentDTO.Name, contentDTO.Year, contentDTO.Directors, contentDTO.Writers, contentDTO.Genres, ConvertTypeDTO.Convert(contentDTO.Images), contentDTO.Language, contentDTO.Transletor, contentDTO.Check);
+                        await DataBase.ContentManager
+                            .UpdateContent(contentDTO.Id, contentDTO.Name, contentDTO.Year, contentDTO.Directors, contentDTO.Writers, contentDTO.Genres, ConvertTypeDTO.Convert(contentDTO.Images), contentDTO.Language, contentDTO.Transletor, contentDTO.Check);
                         await DataBase.SaveAsync();
                         
                         return new OperationDetails(true, "updating succedeed ", "");
@@ -89,7 +90,16 @@ namespace UserStore.BLL.Services
                         var check = await DataBase.CheckManager.GetCheck(1);
                         contentDTO.Check = check.Name;
                         await SetProtertiesForContent(contentDTO);
-                        await DataBase.ContentManager.CreateContent(contentDTO.Name, contentDTO.Path, contentDTO.Year, contentDTO.Directors, contentDTO.Writers, contentDTO.Genres, ConvertTypeDTO.Convert(contentDTO.Images), contentDTO.Language, contentDTO.Transletor, contentDTO.Check);
+                        await DataBase.ContentManager.CreateContent(contentDTO.Name,
+                            contentDTO.Path,
+                            contentDTO.Year,
+                            contentDTO.Directors,
+                            contentDTO.Writers,
+                            contentDTO.Genres,
+                            ConvertTypeDTO.Convert(contentDTO.Images),
+                            contentDTO.Language,
+                            contentDTO.Transletor,
+                            contentDTO.Check);
                         await DataBase.SaveAsync();
                         return new OperationDetails(true, "creating is succedeed ", "");
                     }
@@ -210,7 +220,9 @@ namespace UserStore.BLL.Services
             List<string> list = new List<string>();
             try
             {
-                foreach (var li in await DataBase.GenreManager.GetAll().ToListAsync()) list.Add(li.Name);
+                var genres = await DataBase.GenreManager.GetAll().ToArrayAsync();
+                foreach (var li in genres)
+                    list.Add(li.Name);
                 return list;
             }
             catch (Exception)
@@ -220,12 +232,11 @@ namespace UserStore.BLL.Services
         }
         public async Task<int> GetContentCount(string filter, string value, string types)
         {
-            List<int> listId = new List<int>();
-            List<string> valueList = value.Split(new char[] { ';' }).ToList();
+            List<string> valueList = value.Split( ';' ).ToList();
             try
             {
-                listId = await GetListId(filter, listId, valueList);
-                var i = await DataBase.ContentManager.Quary(x => listId.Contains(x.Id), types).CountAsync();
+                var ids = await GetListId(filter, valueList);
+                var i = await DataBase.ContentManager.Quary(x => ids.Contains(x.Id), types).CountAsync();
                 return i;
             }
             catch (Exception)
@@ -247,15 +258,15 @@ namespace UserStore.BLL.Services
         public async Task<List<ContentDTO>> GetContent(int page, int pageSize, string filter, string value, string types)
         {
             List<ContentDTO> list = new List<ContentDTO>();
-            List<int> listId = new List<int>();
             List<string> valueList = value.Split(new char[] { ';' }).ToList();
 
             try
             {
-                listId = await GetListId(filter, listId, valueList);
-
-                
-                foreach (var li in (await DataBase.ContentManager.Quary(x => listId.Contains(x.Id), types).OrderByDescending(x => x.VoteUp).Skip((page - 1) * pageSize).Take(pageSize).ToListAsync())) list.Add(ConvertTypeDTO.Convert(li));
+                var listId = await GetListId(filter, valueList);
+                                
+                foreach (var li in (await DataBase.ContentManager
+                    .Quary(x => listId.Contains(x.Id), types).OrderByDescending(x => x.VoteUp).Skip((page - 1) * pageSize).Take(pageSize).ToListAsync()))
+                    list.Add(ConvertTypeDTO.Convert(li));
                 
                 return list;
             }
@@ -270,8 +281,9 @@ namespace UserStore.BLL.Services
 
         }
 
-        private async Task<List<int>> GetListId(string filter, List<int> listId, List<string> valueList)
+        private async Task<List<int>> GetListId(string filter, List<string> valueList)
         {
+            List<int> listId = new List<int>();
             foreach (var li in valueList)
             {
                 listId.AddRange(await GetContent(filter, li));
@@ -344,7 +356,8 @@ namespace UserStore.BLL.Services
                             if (local3 != null) local3.ForEach(director => list.AddRange(director.Contents.Where(x => x.Check.Id == 2).Select(x => x.Id).ToList()));
                             var local4 = (await DataBase.ScenaristManager.Quary(x => x.Name.Contains(li)).ToListAsync());
                             if (local4 != null) local4.ForEach(scenarist => list.AddRange(scenarist.Contents.Where(x => x.Check.Id == 2)?.Select(x => x.Id).ToList()));
-                            var local5 = (await DataBase.ContentManager.Quary(x => (x.Name.Contains(li) || x.Transletor.Name.Contains(li) || x.Language.Name.Contains(li) || x.Year == li) && x.Check.Id == 2).Select(x => x.Id).ToListAsync());
+                            var local5 = (await DataBase.ContentManager
+                                .Quary(x => (x.Name.Contains(li) || x.Transletor.Name.Contains(li) || x.Language.Name.Contains(li) || x.Year == li) && x.Check.Id == 2).Select(x => x.Id).ToListAsync());
                             if (local5 != null) list.AddRange(local5);
 
 

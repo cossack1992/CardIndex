@@ -26,18 +26,18 @@ namespace UserStore.WEB.Controllers
         }
         private ContentModelInPut Model
         {
-            get;set;
+            get; set;
         }
-        [Authorize]       
-        public  ActionResult StartNewContent()
+        [Authorize]
+        public ActionResult StartNewContent()
         {
             Model = new ContentModelInPut();
             Model.operation = "AddNewContent";
-            return  View("NewContent", Model);
+            return View("NewContent", Model);
         }
-        
-        
-               
+
+
+
         private async Task<List<string>> GetGenresFromDB()
         {
             try
@@ -52,42 +52,42 @@ namespace UserStore.WEB.Controllers
             }
         }
 
-        
+
         private string Save(HttpPostedFileBase file)
         {
             try
             {
                 if (file != null && file.ContentType != null)
                 {
-                    
-                        string type = file.ContentType.ToLower().Split(new char[] { '/' }).FirstOrDefault();
-                        if (type != null &&(type == "video" || type == "audio" || type == "image" || type == "application"))
-                        {
-                            if (file.ContentLength > 0)
-                            {
-                                string path = "~/AppContent";
-                                var str1 = Path.GetFileName(file.FileName);
-                                string path2 = DateTime.Now.ToString().Replace(" ", "").Replace(":", "").Replace(".", "");
-                                string path3 = Path.Combine(Server.MapPath(path), path2);
-                                if (!Directory.Exists(path3)) Directory.CreateDirectory(path3);
-                                string path4 = Path.Combine(path3, str1);
-                                file.SaveAs(path4);
 
-                                return path2 + @"/" + str1;
-                            }
-                            return null;
-                        
+                    string type = file.ContentType.ToLower().Split(new char[] { '/' }).FirstOrDefault();
+                    if (type != null && (type == "video" || type == "audio" || type == "image" || type == "application"))
+                    {
+                        if (file.ContentLength > 0)
+                        {
+                            string path = "~/AppContent";
+                            var str1 = Path.GetFileName(file.FileName);
+                            string path2 = DateTime.Now.ToString().Replace(" ", "").Replace(":", "").Replace(".", "");
+                            string path3 = Path.Combine(Server.MapPath(path), path2);
+                            if (!Directory.Exists(path3)) Directory.CreateDirectory(path3);
+                            string path4 = Path.Combine(path3, str1);
+                            file.SaveAs(path4);
+
+                            return path2 + @"/" + str1;
+                        }
+                        return null;
+
                     }
                     return null;
                 }
-                 return "";
+                return "";
             }
             catch
             {
                 return null;
-            }    
-                
-            
+            }
+
+
         }
         [Authorize]
         [HttpPost]
@@ -95,9 +95,9 @@ namespace UserStore.WEB.Controllers
         [HandleError()]
         public async Task<ActionResult> AddNewContent(ContentModelInPut Model)
         {
-            
-                if (ModelState.IsValid)
-                {
+
+            if (ModelState.IsValid)
+            {
                 string pathImage = Save(Model.Image);
                 string pathContent = Save(Model.Path);
                 if (pathContent != null && pathImage != null)
@@ -110,12 +110,12 @@ namespace UserStore.WEB.Controllers
                 ModelState.AddModelError("Enter ", "File has wrong type");
                 return View("NewContent", Model);
             }
-                else
-                {
-                    ModelState.AddModelError("Enter ", "Field(s) is/are empty");
-                    return View("NewContent", Model);
-                }
-            
+            else
+            {
+                ModelState.AddModelError("Enter ", "Field(s) is/are empty");
+                return View("NewContent", Model);
+            }
+
         }
         [Authorize(Roles = "admin")]
         [HandleError()]
@@ -132,23 +132,23 @@ namespace UserStore.WEB.Controllers
         [HandleError()]
         public async Task<ActionResult> Update(ContentModelInPut Model)
         {
-            
-                if (ModelState.IsValid)
-                {
+
+            if (ModelState.IsValid)
+            {
                 string pathImage = Save(Model.Image);
                 if (pathImage == null) pathImage = "";
                 OperationDetails det = await Service.UpdateContent(ConvertTypeWEB.Convert(Model, pathImage, ""));
-                    if (det.Succedeed)
-                        return Redirect("/Home/Index");
-                    else return View("Error");
-                }
-                else
-                {
-                    ModelState.AddModelError("Enter ", "Field(s) is/are empty");
-                    return View("NewContent", Model);
-                }
-            
-            
+                if (det.Succedeed)
+                    return Redirect("/Home/Index");
+                else return View("Error");
+            }
+            else
+            {
+                ModelState.AddModelError("Enter ", "Field(s) is/are empty");
+                return View("NewContent", Model);
+            }
+
+
         }
     }
 }
