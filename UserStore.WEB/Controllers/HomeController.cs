@@ -40,8 +40,12 @@ namespace UserStore.WEB.Controllers
         [HandleError()]
         public ActionResult Search(string Search, string[] genres, string[] typ)
         {
-            var value = String.Join(";", genres.Concat(new string[] { Search }));
-            var types = String.Join(";", typ);
+            List<string> listOfValues = new List<string>();
+            if(genres != null) listOfValues.AddRange(genres);
+            if(!String.IsNullOrEmpty(Search)) listOfValues.Add(Search);
+            var value = String.Join(";", listOfValues);
+            var types="";
+            if (typ != null) types = String.Join(";", typ);
             return RedirectToAction("Index", "Home", new
             {
                 types = types != "" ? types : "Book;Audio;Video;Empty",

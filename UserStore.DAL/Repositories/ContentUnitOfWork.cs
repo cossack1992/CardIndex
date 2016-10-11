@@ -40,7 +40,7 @@ namespace UserStore.DAL.Repositories
             imageManager = new ImageManager(db);
             languageManager = new LanguageManager(db);
             scenaristManager = new ScenaristManager(db);
-            transletorManager = new TransletorManager(db);
+            transletorManager = new TranslatorManager(db);
             voteManager = new VoteManager(db);
         }
         

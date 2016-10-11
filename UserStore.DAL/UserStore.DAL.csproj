@@ -118,7 +118,7 @@
     <Compile Include="Repositories\LanguageManager.cs" />
     <Compile Include="Repositories\UserUnitOfWork.cs" />
     <Compile Include="Repositories\ScenaristManager.cs" />
-    <Compile Include="Repositories\TransletorManager.cs" />
+    <Compile Include="Repositories\TranslatorManager.cs" />
     <Compile Include="Repositories\VoteManager.cs" />
   </ItemGroup>
   <ItemGroup>
