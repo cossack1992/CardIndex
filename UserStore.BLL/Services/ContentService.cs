@@ -364,18 +364,18 @@ namespace UserStore.BLL.Services
                         break;
                     case "search":
                         {
-                            var local2 = (await DataBase.GenreManager.Query(x => x.Name.Contains(li)).FirstOrDefaultAsync());
-                            if (local2 != null) list.AddRange(local2.Contents.Where(x => x.Check.Id == 2).Select(x => x.Id).ToList());
-                            var local3 = (await DataBase.DirectorManager.Query(x => x.Name.Contains(li)).ToListAsync());
-                            if (local3 != null) local3.ForEach(director => list.AddRange(director.Contents.Where(x => x.Check.Id == 2).Select(x => x.Id).ToList()));
-                            var local4 = (await DataBase.ScenaristManager.Query(x => x.Name.Contains(li)).ToListAsync());
-                            if (local4 != null) local4.ForEach(scenarist => list.AddRange(scenarist.Contents.Where(x => x.Check.Id == 2)?.Select(x => x.Id).ToList()));
-                            var local5 = (await DataBase.ContentManager
+                            var local2 =  DataBase.GenreManager.Query(x => x.Name.Contains(li)).SelectMany(genre=> genre.Contents.Where(x => x.Check.Id == 2).Select(x => x.Id));
+                            //if (local2 != null) list.AddRange(local2.Contents.ToList());
+                            var local3 =  DataBase.DirectorManager.Query(x => x.Name.Contains(li)).SelectMany(director=> director.Contents.Where(x => x.Check.Id == 2).Select(x => x.Id));
+                           // if (local3 != null) local3.ForEach(director => list.AddRange(.ToList()));
+                            var local4 =  DataBase.ScenaristManager.Query(x => x.Name.Contains(li)).SelectMany(scenarist => scenarist.Contents.Where(x => x.Check.Id == 2).Select(x => x.Id));
+                            // if (local4 != null) local4.ForEach(scenarist => list.AddRange(.ToList()));
+                            var local5 = DataBase.ContentManager
                                 .Query(x => (x.Name.Contains(li) || x.Transletor.Name.Contains(li) || x.Language.Name.Contains(li) || x.Year == li) && x.Check.Id == 2)
-                                .Select(x => x.Id).ToListAsync());
-                            if (local5 != null) list.AddRange(local5);
+                                .Select(x => x.Id);
+                            //if (local5 != null) list.AddRange(local5);
 
-
+                            var ids =await local2.Union(local3).Union(local4).Union(local5).ToArrayAsync();
 
 
                         }
