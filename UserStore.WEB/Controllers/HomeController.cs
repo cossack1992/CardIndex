@@ -40,18 +40,14 @@ namespace UserStore.WEB.Controllers
         [HandleError()]
         public ActionResult Search(string Search, string[] genres, string[] typ)
         {
-            //var value = String.Join(";", genres.Concat(new string[] { Search }));
-            string value = "";
-            string Types = "";
-            if (genres != null) foreach (var li in genres) value += ";" + li;
-            if (Search != "") value += ";" + Search;
-            if (typ != null) foreach (var li in typ) Types += ";" + li;
+            var value = String.Join(";", genres.Concat(new string[] { Search }));
+            var types = String.Join(";", typ);
             return RedirectToAction("Index", "Home", new
             {
-                types = Types != "" ? Types.Remove(0, 1) : "Book;Audio;Video;Empty",
+                types = types != "" ? types : "Book;Audio;Video;Empty",
                 page = 1,
                 filter = "search",
-                value = value != "" ? value.ToLower().Remove(0, 1) : ""
+                value = value != "" ? value.ToLower() : ""
             });
 
         }

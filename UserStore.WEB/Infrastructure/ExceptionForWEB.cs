@@ -20,4 +20,17 @@ namespace UserStore.WEB.Infrastructure
             }
         }
     }
+    public class SaveContentException : Exception
+    {
+        public SaveContentException() : base() { }
+        public SaveContentException(string message) : base(message) { }
+        public SaveContentException(string message, Exception inner) : base(message, inner) { }
+        public override string Message
+        {
+            get
+            {
+                return base.Message;
+            }
+        }
+    }
 }

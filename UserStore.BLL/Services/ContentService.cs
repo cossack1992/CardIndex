@@ -76,9 +76,9 @@ namespace UserStore.BLL.Services
                 {
                     throw;
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
-                    throw new DataAccessException();
+                    throw new DataAccessException("Data Layer: ", ex);
                 }
             }
             else
@@ -179,9 +179,9 @@ namespace UserStore.BLL.Services
                     await DataBase.LanguageManager.SetNew(contentDTO.Language);
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw new DataAccessException();
+                throw new DataAccessException("Data Layer: ", ex);
             }
         }
 
@@ -374,6 +374,7 @@ namespace UserStore.BLL.Services
                                 .Query(x => (x.Name.Contains(li) || x.Transletor.Name.Contains(li) || x.Language.Name.Contains(li) || x.Year == li) && x.Check.Id == 2)
                                 .Select(x => x.Id).ToListAsync());
                             if (local5 != null) list.AddRange(local5);
+
 
 
 

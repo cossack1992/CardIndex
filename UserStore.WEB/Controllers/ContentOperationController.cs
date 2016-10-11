@@ -12,7 +12,7 @@ using UserStore.BLL.Interfaces;
 using UserStore.BLL.Infrastructure;
 using System.Linq;
 using UserStore.WEB.Convert;
-
+using UserStore.WEB.Infrastructure;
 
 namespace UserStore.WEB.Controllers
 {
@@ -65,15 +65,15 @@ namespace UserStore.WEB.Controllers
                     {
                         if (file.ContentLength > 0)
                         {
-                            string path = "~/AppContent";
-                            var str1 = Path.GetFileName(file.FileName);
-                            string path2 = DateTime.Now.ToString().Replace(" ", "").Replace(":", "").Replace(".", "");
-                            string path3 = Path.Combine(Server.MapPath(path), path2);
-                            if (!Directory.Exists(path3)) Directory.CreateDirectory(path3);
-                            string path4 = Path.Combine(path3, str1);
+                            string pathToFolderOfContents = "~/AppContent";
+                            var fileName = Path.GetFileName(file.FileName);
+                            string nameOdDirectoryForContent = DateTime.Now.ToString().Replace(" ", "").Replace(":", "").Replace(".", "");
+                            string fullPathToContent = Path.Combine(Server.MapPath(pathToFolderOfContents), nameOdDirectoryForContent);
+                            if (!Directory.Exists(fullPathToContent)) Directory.CreateDirectory(fullPathToContent);
+                            string path4 = Path.Combine(fullPathToContent, fileName);
                             file.SaveAs(path4);
 
-                            return path2 + @"/" + str1;
+                            return nameOdDirectoryForContent + @"/" + fileName;
                         }
                         return null;
 
@@ -82,9 +82,9 @@ namespace UserStore.WEB.Controllers
                 }
                 return "";
             }
-            catch
+            catch(Exception ex)
             {
-                return null;
+                throw new SaveContentException("Saving is failed", ex);
             }
 
 
