@@ -38,7 +38,7 @@ namespace UserStore.DAL.Repositories
             return await DataBase.Images.Where(x => x.Id == _id).FirstOrDefaultAsync();
         }
 
-        public IQueryable<Image> Quary(Expression<Func<Image, bool>> newFunc)
+        public IQueryable<Image> Query(Expression<Func<Image, bool>> newFunc)
         {
             return  DataBase.Images.Where(newFunc);
         }

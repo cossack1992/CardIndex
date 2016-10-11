@@ -42,7 +42,7 @@ namespace UserStore.DAL.Interfaces
         /// </summary>
         /// <param name="newFunc"></param>
         /// <returns></returns>
-        IQueryable<T> Quary(Expression<Func<T, bool>> newFunc);
+        IQueryable<T> Query(Expression<Func<T, bool>> newFunc);
         /// <summary>
         /// Check on exists value in DataBase
         /// </summary>

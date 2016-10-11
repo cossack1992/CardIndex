@@ -42,16 +42,25 @@ namespace UserStore.BLL.Services
             {
                 try
                 {
-                    var content = await DataBase.ContentManager.Quary(x => x.Id == contentDTO.Id).FirstOrDefaultAsync();
+                    var content = await DataBase.ContentManager.Query(x => x.Id == contentDTO.Id).FirstOrDefaultAsync();
                     if (content != null)
                     {
                         var check = await DataBase.CheckManager.GetCheck(1);
                         contentDTO.Check = check.Name;
                         await SetProtertiesForContent(contentDTO);
-                        await DataBase.ContentManager
-                            .UpdateContent(contentDTO.Id, contentDTO.Name, contentDTO.Year, contentDTO.Directors, contentDTO.Writers, contentDTO.Genres, ConvertTypeDTO.Convert(contentDTO.Images), contentDTO.Language, contentDTO.Transletor, contentDTO.Check);
+                        await DataBase.ContentManager.UpdateContent(
+                            contentDTO.Id,
+                            contentDTO.Name,
+                            contentDTO.Year,
+                            contentDTO.Directors,
+                            contentDTO.Writers,
+                            contentDTO.Genres,
+                            ConvertTypeDTO.Convert(contentDTO.Images),
+                            contentDTO.Language,
+                            contentDTO.Transletor,
+                            contentDTO.Check);
                         await DataBase.SaveAsync();
-                        
+
                         return new OperationDetails(true, "updating succedeed ", "");
                     }
                     else
@@ -59,15 +68,15 @@ namespace UserStore.BLL.Services
                         throw new ArgumentOutOfRangeException();
                     }
                 }
-                catch(ArgumentOutOfRangeException)
+                catch (ArgumentOutOfRangeException)
                 {
                     throw;
                 }
-                catch(ConvertDTOException)
+                catch (ConvertDTOException)
                 {
                     throw;
                 }
-                catch(Exception)
+                catch (Exception)
                 {
                     throw new DataAccessException();
                 }
@@ -84,7 +93,8 @@ namespace UserStore.BLL.Services
             {
                 try
                 {
-                    var content = await DataBase.ContentManager.Quary(x => x.Name == contentDTO.Name && x.Path == contentDTO.Path).FirstOrDefaultAsync();
+                    var content = await DataBase.ContentManager
+                        .Query(x => x.Name == contentDTO.Name && x.Path == contentDTO.Path).FirstOrDefaultAsync();
                     if (content == null)
                     {
                         var check = await DataBase.CheckManager.GetCheck(1);
@@ -105,7 +115,7 @@ namespace UserStore.BLL.Services
                     }
                     else
                     {
-                        throw new ArgumentOutOfRangeException();
+                        throw new ArgumentOutOfRangeException("Content with such id does not exist");
                     }
                 }
                 catch (ArgumentOutOfRangeException)
@@ -116,9 +126,9 @@ namespace UserStore.BLL.Services
                 {
                     throw;
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
-                    throw new DataAccessException();
+                    throw new DataAccessException("Data Layer: ", ex);
                 }
             }
             else
@@ -157,7 +167,7 @@ namespace UserStore.BLL.Services
                     }
                 }
 
-                
+
                 var transletor = await DataBase.TrasletorManager.Get(contentDTO.Transletor);
                 if (transletor == null)
                 {
@@ -169,7 +179,7 @@ namespace UserStore.BLL.Services
                     await DataBase.LanguageManager.SetNew(contentDTO.Language);
                 }
             }
-            catch(Exception)
+            catch (Exception)
             {
                 throw new DataAccessException();
             }
@@ -183,9 +193,9 @@ namespace UserStore.BLL.Services
                 return new OperationDetails(true, "removal succeeded ", "");
 
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw new DataAccessException();
+                throw new DataAccessException("Data layer:", ex);
             }
         }
 
@@ -200,9 +210,9 @@ namespace UserStore.BLL.Services
                 return new OperationDetails(true, "updating of check succeeded ", "");
 
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw new DataAccessException();
+                throw new DataAccessException("Data layer:", ex);
             }
         }
 
@@ -225,23 +235,23 @@ namespace UserStore.BLL.Services
                     list.Add(li.Name);
                 return list;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw new DataAccessException();
+                throw new DataAccessException("Data layer:", ex);
             }
         }
         public async Task<int> GetContentCount(string filter, string value, string types)
         {
-            List<string> valueList = value.Split( ';' ).ToList();
+            List<string> valueList = value.Split(';').ToList();
             try
             {
                 var ids = await GetListId(filter, valueList);
-                var i = await DataBase.ContentManager.Quary(x => ids.Contains(x.Id), types).CountAsync();
+                var i = await DataBase.ContentManager.Query(x => ids.Contains(x.Id), types).CountAsync();
                 return i;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw new DataAccessException();
+                throw new DataAccessException("Data layer:", ex);
             }
         }
         public async Task<ContentDTO> GetContent(int id)
@@ -250,9 +260,13 @@ namespace UserStore.BLL.Services
             {
                 return ConvertTypeDTO.Convert(await DataBase.ContentManager.GetContent(id));
             }
-            catch (Exception)
+            catch (ConvertDTOException)
             {
-                throw new DataAccessException();
+                throw;
+            }
+            catch (Exception ex)
+            {
+                throw new DataAccessException("Data layer:", ex);
             }
         }
         public async Task<List<ContentDTO>> GetContent(int page, int pageSize, string filter, string value, string types)
@@ -263,20 +277,20 @@ namespace UserStore.BLL.Services
             try
             {
                 var listId = await GetListId(filter, valueList);
-                                
+
                 foreach (var li in (await DataBase.ContentManager
-                    .Quary(x => listId.Contains(x.Id), types).OrderByDescending(x => x.VoteUp).Skip((page - 1) * pageSize).Take(pageSize).ToListAsync()))
+                    .Query(x => listId.Contains(x.Id), types).OrderByDescending(x => x.VoteUp).Skip((page - 1) * pageSize).Take(pageSize).ToListAsync()))
                     list.Add(ConvertTypeDTO.Convert(li));
-                
+
                 return list;
             }
             catch (ConvertDTOException)
             {
                 throw;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw new DataAccessException();
+                throw new DataAccessException("Data layer:", ex);
             }
 
         }
@@ -300,64 +314,65 @@ namespace UserStore.BLL.Services
                 {
                     case "admin":
                         {
-                            var local = await DataBase.ContentManager.Quary(x => x.Check.Id == 1).ToListAsync();
+                            var local = await DataBase.ContentManager.Query(x => x.Check.Id == 1).ToListAsync();
                             if (local != null) list.AddRange(local.Select(x => x.Id));
                         }
                         break;
                     case "genre":
                         {
-                            var local = await DataBase.GenreManager.Quary(x => x.Name == li).FirstOrDefaultAsync();
+                            var local = await DataBase.GenreManager.Query(x => x.Name == li).FirstOrDefaultAsync();
                             if (local != null) list.AddRange(local.Contents.Where(x => x.Check.Id == 2).Select(x => x.Id).ToList());
 
                         }
                         break;
                     case "director":
                         {
-                            var local = await DataBase.DirectorManager.Quary(x => x.Name == li).FirstOrDefaultAsync();
+                            var local = await DataBase.DirectorManager.Query(x => x.Name == li).FirstOrDefaultAsync();
                             if (local != null) list.AddRange(local.Contents.Where(x => x.Check.Id == 2).Select(x => x.Id).ToList());
 
                         }
                         break;
                     case "scenarist":
                         {
-                            var local = await DataBase.ScenaristManager.Quary(x => x.Name == li).FirstOrDefaultAsync();
+                            var local = await DataBase.ScenaristManager.Query(x => x.Name == li).FirstOrDefaultAsync();
                             if (local != null) list.AddRange(local.Contents.Where(x => x.Check.Id == 2).Select(x => x.Id).ToList());
 
                         }
                         break;
                     case "year":
                         {
-                            list.AddRange(await DataBase.ContentManager.Quary(x => x.Year == li && x.Check.Id == 2).Select(x => x.Id).ToListAsync());
+                            list.AddRange(await DataBase.ContentManager.Query(x => x.Year == li && x.Check.Id == 2).Select(x => x.Id).ToListAsync());
                         }
                         break;
                     case "transletor":
                         {
-                            list.AddRange(await DataBase.ContentManager.Quary(x => x.Transletor.Name == li && x.Check.Id == 2).Select(x => x.Id).ToListAsync());
+                            list.AddRange(await DataBase.ContentManager.Query(x => x.Transletor.Name == li && x.Check.Id == 2).Select(x => x.Id).ToListAsync());
 
                         }
                         break;
                     case "language":
                         {
-                            list.AddRange(await DataBase.ContentManager.Quary(x => x.Language.Name == li && x.Check.Id == 2).Select(x => x.Id).ToListAsync());
+                            list.AddRange(await DataBase.ContentManager.Query(x => x.Language.Name == li && x.Check.Id == 2).Select(x => x.Id).ToListAsync());
 
                         }
                         break;
                     case "name":
                         {
-                            list.AddRange(await DataBase.ContentManager.Quary(x => x.Name == li && x.Check.Id == 2).Select(x => x.Id).ToListAsync());
+                            list.AddRange(await DataBase.ContentManager.Query(x => x.Name == li && x.Check.Id == 2).Select(x => x.Id).ToListAsync());
 
                         }
                         break;
                     case "search":
                         {
-                            var local2 = (await DataBase.GenreManager.Quary(x => x.Name.Contains(li)).FirstOrDefaultAsync());
+                            var local2 = (await DataBase.GenreManager.Query(x => x.Name.Contains(li)).FirstOrDefaultAsync());
                             if (local2 != null) list.AddRange(local2.Contents.Where(x => x.Check.Id == 2).Select(x => x.Id).ToList());
-                            var local3 = (await DataBase.DirectorManager.Quary(x => x.Name.Contains(li)).ToListAsync());
+                            var local3 = (await DataBase.DirectorManager.Query(x => x.Name.Contains(li)).ToListAsync());
                             if (local3 != null) local3.ForEach(director => list.AddRange(director.Contents.Where(x => x.Check.Id == 2).Select(x => x.Id).ToList()));
-                            var local4 = (await DataBase.ScenaristManager.Quary(x => x.Name.Contains(li)).ToListAsync());
+                            var local4 = (await DataBase.ScenaristManager.Query(x => x.Name.Contains(li)).ToListAsync());
                             if (local4 != null) local4.ForEach(scenarist => list.AddRange(scenarist.Contents.Where(x => x.Check.Id == 2)?.Select(x => x.Id).ToList()));
                             var local5 = (await DataBase.ContentManager
-                                .Quary(x => (x.Name.Contains(li) || x.Transletor.Name.Contains(li) || x.Language.Name.Contains(li) || x.Year == li) && x.Check.Id == 2).Select(x => x.Id).ToListAsync());
+                                .Query(x => (x.Name.Contains(li) || x.Transletor.Name.Contains(li) || x.Language.Name.Contains(li) || x.Year == li) && x.Check.Id == 2)
+                                .Select(x => x.Id).ToListAsync());
                             if (local5 != null) list.AddRange(local5);
 
 
@@ -367,7 +382,7 @@ namespace UserStore.BLL.Services
                         break;
                     default:
                         {
-                            list.AddRange(await DataBase.ContentManager.Quary(x => x.Check.Id == 2).Select(x => x.Id).ToListAsync());
+                            list.AddRange(await DataBase.ContentManager.Query(x => x.Check.Id == 2).Select(x => x.Id).ToListAsync());
 
                         }
                         break;
@@ -377,20 +392,20 @@ namespace UserStore.BLL.Services
 
                 return list;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw new DataAccessException();
+                throw new DataAccessException("Data layer:", ex);
             }
 
         }
 
         public async Task<OperationDetails> MakeVote(int id, string userName, int? vote)
-        {            
+        {
             try
             {
                 var content = await DataBase.ContentManager.GetContent(id);
 
-                if ( content != null)
+                if (content != null)
                 {
                     await DataBase.VoteManager.NewVote(userName, id, vote);
                     await DataBase.ContentManager.UpdateVoteUp(id, await DataBase.VoteManager.GetVotes(id, 1));
@@ -402,9 +417,9 @@ namespace UserStore.BLL.Services
                     return new OperationDetails(false, "Voting  failed ", "");
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw new DataAccessException();
+                throw new DataAccessException("Data layer:", ex);
             }
         }
     }

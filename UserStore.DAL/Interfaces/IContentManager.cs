@@ -53,14 +53,14 @@ namespace UserStore.DAL.Interfaces
         /// </summary>
         /// <param name="quary"></param>
         /// <returns></returns>
-        IQueryable<AbstractContent> Quary( Expression<Func<AbstractContent, bool>> quary);
+        IQueryable<AbstractContent> Query( Expression<Func<AbstractContent, bool>> quary);
         /// <summary>
         /// Get content with types for expression
         /// </summary>
         /// <param name="quary"></param>
         /// <param name="types"></param>
         /// <returns></returns>
-        IQueryable<AbstractContent> Quary(Expression<Func<AbstractContent, bool>> quary, string types);
+        IQueryable<AbstractContent> Query(Expression<Func<AbstractContent, bool>> quary, string types);
 
         /// <summary>
         /// Get count of contents

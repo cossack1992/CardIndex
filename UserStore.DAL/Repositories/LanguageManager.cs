@@ -38,7 +38,7 @@ namespace UserStore.DAL.Repositories
             return await DataBase.Languages.Where(x => x.Id == _id).FirstOrDefaultAsync();
         }
 
-        public IQueryable<Language> Quary(Expression<Func<Language, bool>> newFunc)
+        public IQueryable<Language> Query(Expression<Func<Language, bool>> newFunc)
         {
             return  DataBase.Languages.Where(newFunc);
             

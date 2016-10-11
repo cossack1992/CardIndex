@@ -16,7 +16,7 @@ namespace UserStore.DAL.Interfaces
         Task<int> SetNew(string name, string path);
         Task<int> Count();
 
-        IQueryable<Image> Quary(Expression<Func<Image, bool>> newFunc);
+        IQueryable<Image> Query(Expression<Func<Image, bool>> newFunc);
         Task<Image> FindAsync(Image name);
     }
 }

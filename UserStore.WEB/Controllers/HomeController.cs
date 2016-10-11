@@ -136,10 +136,6 @@ namespace UserStore.WEB.Controllers
             ViewBag.Filter = filter;
             ViewBag.Value = value;
             ViewBag.Types = types;
-
-
-
-
             if (filter != "admin")
             {
                 List<ContentModelOutPut> list = new List<ContentModelOutPut>();

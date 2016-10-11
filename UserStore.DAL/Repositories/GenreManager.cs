@@ -38,7 +38,7 @@ namespace UserStore.DAL.Repositories
             return await DataBase.Genres.Where(x => x.Id == _id).FirstOrDefaultAsync();
         }
 
-        public  IQueryable<Genre> Quary(Expression<Func<Genre, bool>> newFunc)
+        public  IQueryable<Genre> Query(Expression<Func<Genre, bool>> newFunc)
         {
             Genre genre = DataBase.Genres.Include(x => x.Contents).Where(newFunc).FirstOrDefault();
             return DataBase.Genres.Include(x => x.Contents).Where(newFunc);

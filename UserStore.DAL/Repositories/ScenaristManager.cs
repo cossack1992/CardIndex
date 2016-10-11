@@ -38,7 +38,7 @@ namespace UserStore.DAL.Repositories
             return await DataBase.Writers.Where(x => x.Id == _id).FirstOrDefaultAsync();
         }
 
-        public IQueryable<Scenarist> Quary(Expression<Func<Scenarist, bool>> newFunc)
+        public IQueryable<Scenarist> Query(Expression<Func<Scenarist, bool>> newFunc)
         {
             return  DataBase.Writers.Include(x => x.Contents).Where(newFunc);
             

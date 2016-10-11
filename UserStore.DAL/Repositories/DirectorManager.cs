@@ -65,7 +65,7 @@ namespace UserStore.DAL.Repositories
             }
         }
 
-        public IQueryable<Director> Quary(Expression<Func<Director, bool>> newFunc)
+        public IQueryable<Director> Query(Expression<Func<Director, bool>> newFunc)
         {
             var loc = DataBase.Directors.Include(x => x.Contents).Where(newFunc);
             return loc;

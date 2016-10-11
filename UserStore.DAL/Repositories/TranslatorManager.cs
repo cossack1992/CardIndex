@@ -11,10 +11,10 @@ using System.Data.Entity;
 
 namespace UserStore.DAL.Repositories
 {
-    class TransletorManager : IManager<Translator>
+    class TranslatorManager : IManager<Translator>
     {
         public ApplicationContext DataBase { get; set; }
-        public TransletorManager(ApplicationContext db)
+        public TranslatorManager(ApplicationContext db)
         {
             DataBase = db;
         }
@@ -25,7 +25,7 @@ namespace UserStore.DAL.Repositories
 
         public IQueryable<Translator> GetAll()
         {
-            return  DataBase.Transletors;
+            return DataBase.Transletors;
         }
 
         public async Task<Translator> Get(string name)
@@ -38,14 +38,14 @@ namespace UserStore.DAL.Repositories
             return await DataBase.Transletors.Where(x => x.Id == _id).FirstOrDefaultAsync();
         }
 
-        public IQueryable<Translator> Quary(Expression<Func<Translator, bool>> newFunc)
+        public IQueryable<Translator> Query(Expression<Func<Translator, bool>> newFunc)
         {
-            return  DataBase.Transletors.Where(newFunc);
+            return DataBase.Transletors.Where(newFunc);
         }
 
         public async Task<int> SetNew(string name)
         {
-            DataBase.Transletors.Add(new Translator { Name = name});
+            DataBase.Transletors.Add(new Translator { Name = name });
             return await DataBase.SaveChangesAsync();
         }
         public async Task<Translator> FindAsync(Translator name)
