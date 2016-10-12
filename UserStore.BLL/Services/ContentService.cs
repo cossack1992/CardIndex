@@ -72,13 +72,13 @@ namespace UserStore.BLL.Services
                         throw new ArgumentOutOfRangeException();
                     }
                 }
-                catch (ArgumentOutOfRangeException ex)
+                catch (ArgumentOutOfRangeException )
                 {
-                    throw ex;
+                    throw;
                 }
-                catch (ConvertDTOException ex)
+                catch (ConvertDTOException )
                 {
-                    throw ex;
+                    throw;
                 }
                 catch (Exception ex)
                 {
@@ -123,13 +123,13 @@ namespace UserStore.BLL.Services
                         throw new ArgumentOutOfRangeException("Content with such id does not exist");
                     }
                 }
-                catch (ArgumentOutOfRangeException ex)
+                catch (ArgumentOutOfRangeException )
                 {
-                    throw ex;
+                    throw;
                 }
-                catch (ConvertDTOException ex)
+                catch (ConvertDTOException )
                 {
-                    throw ex;
+                    throw;
                 }
                 catch (Exception ex)
                 {
@@ -263,9 +263,9 @@ namespace UserStore.BLL.Services
             {
                 return ConvertTypeDTO.Convert(await DataBase.ContentManager.GetContent(id));
             }
-            catch (ConvertDTOException ex)
+            catch (ConvertDTOException )
             {
-                throw ex;
+                throw;
             }
             catch (Exception ex)
             {
@@ -291,9 +291,9 @@ namespace UserStore.BLL.Services
 
                 return contetList;
             }
-            catch (ConvertDTOException ex)
+            catch (ConvertDTOException )
             {
-                throw ex;
+                throw;
             }
             catch (Exception ex)
             {

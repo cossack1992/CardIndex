@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace UserStore.WEB.Infrastructure
 {
-    
+    [Serializable]
     public class ConvertWEBException : Exception
     {
         public ConvertWEBException() : base() { }
@@ -20,6 +20,7 @@ namespace UserStore.WEB.Infrastructure
             }
         }
     }
+    [Serializable]
     public class SaveContentException : Exception
     {
         public SaveContentException() : base() { }

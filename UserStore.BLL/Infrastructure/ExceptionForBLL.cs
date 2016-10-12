@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace UserStore.BLL.Infrastructure
 {
+    [Serializable]
     public class DataAccessException : Exception
     {
         public DataAccessException() : base() { }
@@ -19,6 +20,7 @@ namespace UserStore.BLL.Infrastructure
             }
         }
     }
+    [Serializable]
     public class ConvertDTOException : Exception
     {
         public ConvertDTOException() : base() { }
