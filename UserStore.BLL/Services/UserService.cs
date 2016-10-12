@@ -34,11 +34,22 @@ namespace UserStore.BLL.Services
                 ApplicationUser user = await DataBase.UserManager.FindByEmailAsync(userDTO.Email);
                 if (user == null)
                 {
-                    user = new ApplicationUser { Email = userDTO.Email, UserName = userDTO.Email };
-                    var result = await DataBase.UserManager.CreateAsync(user, userDTO.Password);
-                    if (result.Errors.Count() > 0) return new OperationDetails(false, result.Errors.FirstOrDefault(), "");
-                    await DataBase.UserManager.AddToRoleAsync(user.Id, userDTO.Role);
-                    ClientProfile clientProfile = new ClientProfile { Id = user.Id, Address = userDTO.Address, Name = userDTO.Name };
+                    user = new ApplicationUser {
+                        Email = userDTO.Email,
+                        UserName = userDTO.Email
+                    };
+                    var result = await DataBase.UserManager
+                            .CreateAsync(user, userDTO.Password);
+                    if (result.Errors.Count() > 0)
+                            return new OperationDetails(false, result.Errors.FirstOrDefault(), "");
+                    await DataBase.UserManager
+                            .AddToRoleAsync(user.Id, userDTO.Role);
+                    ClientProfile clientProfile =
+                            new ClientProfile {
+                                Id = user.Id,
+                                Address = userDTO.Address,
+                                Name = userDTO.Name
+                            };
                     DataBase.ClientManager.CreateProfile(clientProfile);
                     await DataBase.SaveAsync();
                     return new OperationDetails(true, "registration succedeed ", "");
@@ -48,18 +59,18 @@ namespace UserStore.BLL.Services
                         return new OperationDetails(false, "registration failed ", "");
                     }
                 }
-                catch (ArgumentOutOfRangeException)
+                catch (ArgumentOutOfRangeException ex)
                 {
-                    throw;
+                    throw ex;
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
-                    throw new DataAccessException();
+                    throw new DataAccessException("Creating new user is failed", ex);
                 }
             }
             else
             {
-                throw new ArgumentNullException();
+                throw new ArgumentNullException("New user is empty");
             }
         }
         public async Task<ClaimsIdentity> Autenticate(UserDTO userDTO)
@@ -71,21 +82,23 @@ namespace UserStore.BLL.Services
                 ClaimsIdentity claim = null;
                 try
                 {
-                    ApplicationUser user = await DataBase.UserManager.FindAsync(userDTO.Email, userDTO.Password);
+                    ApplicationUser user = await DataBase.UserManager
+                        .FindAsync(userDTO.Email, userDTO.Password);
                     if (user != null)
                     {
-                        claim = await DataBase.UserManager.CreateIdentityAsync(user, DefaultAuthenticationTypes.ApplicationCookie);
+                        claim = await DataBase.UserManager
+                            .CreateIdentityAsync(user, DefaultAuthenticationTypes.ApplicationCookie);
                     }
                     return claim;
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
-                    throw new DataAccessException();
+                    throw new DataAccessException("Autenticating is failed", ex);
                 }
             }
             else
             {
-                throw new ArgumentNullException();
+                throw new ArgumentNullException("User is failed");
             }
         }
         public async Task SetInitialUserData(UserDTO adminDTO, List<string> roles)
@@ -103,9 +116,9 @@ namespace UserStore.BLL.Services
                 }
                 await CreateUser(adminDTO);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw new DataAccessException();
+                throw new DataAccessException("Initialzing is failed", ex);
             }
         }
         public void Dispose()

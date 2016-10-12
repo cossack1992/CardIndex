@@ -10,11 +10,9 @@ using Ninject;
 namespace UserStore.BLL.Services
 {
     public class ServiceCreator : IServiceCreator
-    {
-        
+    {      
         public IUserService CreateService(string connection)
-        {
-            
+        {           
             return new UserService(new UserUnitOfWork(connection));
         }
     }

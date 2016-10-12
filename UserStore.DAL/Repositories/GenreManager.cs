@@ -40,10 +40,7 @@ namespace UserStore.DAL.Repositories
 
         public  IQueryable<Genre> Query(Expression<Func<Genre, bool>> newFunc)
         {
-            Genre genre = DataBase.Genres.Include(x => x.Contents).Where(newFunc).FirstOrDefault();
-            return DataBase.Genres.Include(x => x.Contents).Where(newFunc);
-            
-            
+            return DataBase.Genres.Include(x => x.Contents).Where(newFunc);           
         }
 
         public async Task<int> SetNew(string name)

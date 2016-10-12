@@ -16,8 +16,6 @@ namespace UserStore.WEB.Convert
             {
                 try
                 {
-
-
                     ContentDTO newContent = new ContentDTO();
                     newContent.Name = model.Name.ToLower();
                     foreach (var i in model.Directors.Split(new char[] { ';', ',', '.', ':' })) newContent.Directors.Add(i.ToLower());
@@ -26,14 +24,14 @@ namespace UserStore.WEB.Convert
                     newContent.Id = model.Id;
                     if (imagePath != "" && imagePath != null) newContent.Images.Add(new ImageDTO { Name = model.Image.FileName.ToLower(), Path = imagePath });
                     if (path != null) newContent.Path = path;
-                    newContent.Transletor = model.Transletor.ToLower();
+                    newContent.Translator = model.Translator.ToLower();
                     newContent.Language = model.Language.ToLower();
                     newContent.Year = model.Year.ToString();
                     return newContent;
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
-                    throw new ConvertWEBException();
+                    throw new ConvertWEBException("Converting input model of content is failed", ex);
                 }
             }
             else throw new ArgumentNullException();
@@ -59,18 +57,18 @@ namespace UserStore.WEB.Convert
                     newContent.Type = model.Type;
                     newContent.VoteUp = model.VoteUp;
                     newContent.VoteDown = model.VoteDown;
-                    newContent.Transletor = model.Transletor;
+                    newContent.Translator = model.Translator;
                     newContent.Language = model.Language;
                     newContent.Check = model.Check;
                     newContent.Year = model.Year;
                     return newContent;
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
-                    throw new ConvertWEBException();
+                    throw new ConvertWEBException("Converting content from BLL to WEB-out is failed", ex);
                 }
             }
-            else throw new ArgumentNullException();
+            else throw new ArgumentNullException("content from BLL is empty");
         }
         public static ContentModelInPut ConvertIn(ContentDTO model)
         {
@@ -81,35 +79,37 @@ namespace UserStore.WEB.Convert
                     ContentModelInPut newContent = new ContentModelInPut();
                     newContent.operation = "Update";
                     newContent.Name = model.Name;
-                    foreach (var i in model.Directors) newContent.Directors += ";" + i;
+                    foreach (var i in model.Directors)
+                        newContent.Directors += ";" + i;
 
                     newContent.Directors = newContent.Directors.Remove(0, 1);
-                    foreach (var i in model.Writers) newContent.Writers += ";" + i;
+                    foreach (var i in model.Writers)
+                        newContent.Writers += ";" + i;
 
                     newContent.Writers = newContent.Writers.Remove(0, 1);
-                    foreach (var i in model.Genres) newContent.Genres += ";" + i;
+                    foreach (var i in model.Genres)
+                        newContent.Genres += ";" + i;
 
                     newContent.Genres = newContent.Genres.Remove(0, 1);
 
                     newContent.Id = model.Id;
 
-                    newContent.Transletor = model.Transletor;
+                    newContent.Translator = model.Translator;
                     newContent.Language = model.Language;
                     newContent.Check = model.Check;
 
                     int year;
                     if (Int32.TryParse(model.Year, out year))
-
                         newContent.Year = year;
                     else newContent.Year = 1930;
                     return newContent;
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
-                    throw new ConvertWEBException();
+                    throw new ConvertWEBException("Converting content from BLL to WEB-out is failed", ex);
                 }
             }
-            else throw new ArgumentNullException();
+            else throw new ArgumentNullException("Content from BLL is empty");
         }
         public static ContentDTO Convert(ContentModelOutPut model)
         {
@@ -134,18 +134,18 @@ namespace UserStore.WEB.Convert
                     newContent.Type = model.Type;
                     newContent.VoteUp = model.VoteUp;
                     newContent.VoteDown = model.VoteDown;
-                    newContent.Transletor = model.Transletor;
+                    newContent.Translator = model.Translator;
                     newContent.Language = model.Language;
                     newContent.Check = model.Check;
                     newContent.Year = model.Year;
                     return newContent;
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
-                    throw new ConvertWEBException();
+                    throw new ConvertWEBException("Converting input model from WEB to BLL is failed", ex);
                 }
             }
-            else throw new ArgumentNullException();
+            else throw new ArgumentNullException("Content in input model is empty");
         }
     }
 }

@@ -15,7 +15,7 @@ namespace UserStore.BLL.DTO
         public int VoteUp { get; set; }
         public int VoteDown { get; set; }
         public string Language { get; set; }
-        public string Transletor { get; set; }
+        public string Translator { get; set; }
         public string Check { get; set; }
         public string Year { get; set; }
         public IList<string> Genres { get; set; }

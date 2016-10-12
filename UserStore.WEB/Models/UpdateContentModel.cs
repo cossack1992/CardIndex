@@ -19,7 +19,7 @@ namespace UserStore.WEB.Models
         [Required(ErrorMessage = "The Landuage is required.")]
         public string Language { get; set; }
         [Required(ErrorMessage = "The Traslator is required.")]
-        public string Transletor { get; set; }
+        public string Translator { get; set; }
         public string Check { get; set; }
         [Required(ErrorMessage = "The Year is required.")]
         [DisplayFormat(DataFormatString = "{0:yyyy}")]

@@ -33,9 +33,51 @@ namespace UserStore.UT
              scenarist = new Scenarist { Id = 1, Name = "scenarist" };
              check = new Check { Id = 1, Name = "checked" };
              image1 = new Image { Id = 1, Name = "image1", Path = @"e:\imagepath1" };
-             content = new Video { Id = 1, Name = "content1", Path = @"e:\contentpath", Year = 2016.ToString(), VoteUp = 2, VoteDown = 1, Check = check, Directors = new List<Director>() { director}, Genres = new List<Genre>() { genreComedy }, Images = new List<Image>() { image1}, Language = languageEnglish, Transletor = transletor, Writers = new List<Scenarist>() { scenarist} };
-            contentDTO = new ContentDTO { Id = 1, Name = "content1", Path = @"e:\contentpath", Year = 2016.ToString(), VoteUp = 2, VoteDown = 1, Check = "checked", Directors = new List<string>() { "director" }, Genres = new List<string>() { "comedy" }, Images = new List<ImageDTO>() { new ImageDTO { Id = 1, Name = "image1", Path = @"e:\imagepath1" } }, Language = "english", Transletor = "transletor", Writers = new List<string>() { "scenarist" }, Type = "Video" };            
-            contentWEBOUT = new ContentModelOutPut { Id = 1, Name = "content1", Path = @"e:\contentpath", Year = 2016.ToString(), VoteUp = 2, VoteDown = 1, Check = "checked", Directors = new List<string>() { "director" }, Genres = new List<string>() { "comedy" }, Images = new List<ImageModel>() { new ImageModel { Name = "image1", Path = @"e:\imagepath1" } }, Language = "english", Transletor = "transletor", Writers = new List<string>() { "scenarist" }, Type = "Video" };
+             content = new Video {
+                 Id = 1,
+                 Name = "content1",
+                 Path = @"e:\contentpath",
+                 Year = 2016.ToString(),
+                 VoteUp = 2,
+                 VoteDown = 1,
+                 Check = check,
+                 Directors = new List<Director>() { director},
+                 Genres = new List<Genre>() { genreComedy },
+                 Images = new List<Image>() { image1},
+                 Language = languageEnglish,
+                 Transletor = transletor,
+                 Writers = new List<Scenarist>() { scenarist}
+             };
+            contentDTO = new ContentDTO {
+                Id = 1,
+                Name = "content1",
+                Path = @"e:\contentpath",
+                Year = 2016.ToString(),
+                VoteUp = 2,
+                VoteDown = 1,
+                Check = "checked",
+                Directors = new List<string>() { "director" },
+                Genres = new List<string>() { "comedy" },
+                Images = new List<ImageDTO>() { new ImageDTO { Id = 1, Name = "image1", Path = @"e:\imagepath1" } },
+                Language = "english",
+                Translator = "transletor",
+                Writers = new List<string>() { "scenarist" },
+                Type = "Video" };            
+            contentWEBOUT = new ContentModelOutPut {
+                Id = 1,
+                Name = "content1",
+                Path = @"e:\contentpath",
+                Year = 2016.ToString(),
+                VoteUp = 2,
+                VoteDown = 1,
+                Check = "checked",
+                Directors = new List<string>() { "director" },
+                Genres = new List<string>() { "comedy" },
+                Images = new List<ImageModel>() { new ImageModel { Name = "image1", Path = @"e:\imagepath1" } },
+                Language = "english",
+                Translator = "transletor",
+                Writers = new List<string>() { "scenarist" },
+                Type = "Video" };
         }
         [TestMethod]
         public void ContentDAL_ConvertTo_ContentDTO()
@@ -58,7 +100,7 @@ namespace UserStore.UT
             if (conten1.VoteDown != content2.VoteDown) return false;
             if (conten1.Year != content2.Year) return false;
             if (conten1.Type != content2.Type) return false;
-            if (conten1.Transletor != content2.Transletor) return false;
+            if (conten1.Translator != content2.Translator) return false;
             if (conten1.Language != content2.Language) return false;
             foreach (var li in conten1.Genres) if (!content2.Genres.Contains(li)) return false;           
             foreach (var li in conten1.Directors) if (!content2.Directors.Contains(li)) return false;           
@@ -74,7 +116,7 @@ namespace UserStore.UT
             if (conten1.VoteDown != content2.VoteDown) return false;
             if (conten1.Year != content2.Year) return false;
             if (conten1.Type != content2.Type) return false;
-            if (conten1.Transletor != content2.Transletor) return false;
+            if (conten1.Translator != content2.Translator) return false;
             if (conten1.Language != content2.Language) return false;
             foreach (var li in conten1.Genres) if (!content2.Genres.Contains(li)) return false;
             foreach (var li in conten1.Directors) if (!content2.Directors.Contains(li)) return false;

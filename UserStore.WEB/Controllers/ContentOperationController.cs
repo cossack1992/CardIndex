@@ -67,9 +67,19 @@ namespace UserStore.WEB.Controllers
                         {
                             string pathToFolderOfContents = "~/AppContent";
                             var fileName = Path.GetFileName(file.FileName);
-                            string nameOdDirectoryForContent = DateTime.Now.ToString().Replace(" ", "").Replace(":", "").Replace(".", "");
-                            string fullPathToContent = Path.Combine(Server.MapPath(pathToFolderOfContents), nameOdDirectoryForContent);
-                            if (!Directory.Exists(fullPathToContent)) Directory.CreateDirectory(fullPathToContent);
+                            string nameOdDirectoryForContent = 
+                                DateTime.Now.ToString()
+                                .Replace(" ", "")
+                                .Replace(":", "")
+                                .Replace(".", "");
+                            string fullPathToContent =
+                                Path.Combine(
+                                    Server.MapPath(pathToFolderOfContents),
+                                    nameOdDirectoryForContent
+                                    );
+                            if (!Directory.Exists(fullPathToContent))
+                                Directory.CreateDirectory(fullPathToContent);
+
                             string path4 = Path.Combine(fullPathToContent, fileName);
                             file.SaveAs(path4);
 
@@ -102,7 +112,9 @@ namespace UserStore.WEB.Controllers
                 string pathContent = Save(Model.Path);
                 if (pathContent != null && pathImage != null)
                 {
-                    OperationDetails det = await Service.CreateContent(ConvertTypeWEB.Convert(Model, pathImage, pathContent));
+                    OperationDetails det = await Service.CreateContent(
+                        ConvertTypeWEB.Convert(Model, pathImage, pathContent)
+                        );
                     if (det.Succedeed)
                         return Redirect("/Home/Index");
                     else return View("Error");
@@ -137,7 +149,9 @@ namespace UserStore.WEB.Controllers
             {
                 string pathImage = Save(Model.Image);
                 if (pathImage == null) pathImage = "";
-                OperationDetails det = await Service.UpdateContent(ConvertTypeWEB.Convert(Model, pathImage, ""));
+                OperationDetails det = await Service.UpdateContent(
+                    ConvertTypeWEB.Convert(Model, pathImage, "")
+                    );
                 if (det.Succedeed)
                     return Redirect("/Home/Index");
                 else return View("Error");
