@@ -182,7 +182,7 @@ namespace UserStore.WEB.Controllers
             ViewBag.Types = types;
             if (filter != "admin")
             {
-                List<ContentModelOutPut> ContentsList = new List<ContentModelOutPut>();
+                List<ContentModelOutPut> contentsList = new List<ContentModelOutPut>();
 
                 var contentsFromBLL = 
                     await Service.GetContent(
@@ -193,7 +193,7 @@ namespace UserStore.WEB.Controllers
                         types
                     );
                 foreach (var content in contentsFromBLL)
-                    ContentsList.Add(ConvertTypeWEB.Convert(content));
+                    contentsList.Add(ConvertTypeWEB.Convert(content));
 
                 PageModel pageModel = new PageModel {
                     PageNumber = page,
@@ -202,7 +202,7 @@ namespace UserStore.WEB.Controllers
                 };
                 IndexViewModel ivm = new IndexViewModel {
                     PageInfo = pageModel,
-                    Contents = ContentsList,
+                    Contents = contentsList,
                     Genres = await Service.GetAllGenres(),
                     Filter = filter,
                     Value = value,
