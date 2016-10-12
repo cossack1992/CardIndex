@@ -364,20 +364,22 @@ namespace UserStore.BLL.Services
                         break;
                     case "search":
                         {
-                            var local2 =  DataBase.GenreManager.Query(x => x.Name.Contains(li)).SelectMany(genre=> genre.Contents.Where(x => x.Check.Id == 2).Select(x => x.Id));
-                            //if (local2 != null) list.AddRange(local2.Contents.ToList());
-                            var local3 =  DataBase.DirectorManager.Query(x => x.Name.Contains(li)).SelectMany(director=> director.Contents.Where(x => x.Check.Id == 2).Select(x => x.Id));
-                           // if (local3 != null) local3.ForEach(director => list.AddRange(.ToList()));
-                            var local4 =  DataBase.ScenaristManager.Query(x => x.Name.Contains(li)).SelectMany(scenarist => scenarist.Contents.Where(x => x.Check.Id == 2).Select(x => x.Id));
-                            // if (local4 != null) local4.ForEach(scenarist => list.AddRange(.ToList()));
-                            var local5 = DataBase.ContentManager
+                            var idListFromGenre = DataBase.GenreManager
+                                .Query(x => x.Name.Contains(li)).SelectMany(genre => genre.Contents.Where(x => x.Check.Id == 2).Select(x => x.Id));
+
+                            var idListFromDirector = DataBase.DirectorManager
+                                .Query(x => x.Name.Contains(li)).SelectMany(director => director.Contents.Where(x => x.Check.Id == 2).Select(x => x.Id));
+
+                            var idListFromScenarist = DataBase.ScenaristManager
+                                .Query(x => x.Name.Contains(li)).SelectMany(scenarist => scenarist.Contents.Where(x => x.Check.Id == 2).Select(x => x.Id));
+
+                            var idListFromAbstractContent = DataBase.ContentManager
                                 .Query(x => (x.Name.Contains(li) || x.Transletor.Name.Contains(li) || x.Language.Name.Contains(li) || x.Year == li) && x.Check.Id == 2)
                                 .Select(x => x.Id);
-                            //if (local5 != null) list.AddRange(local5);
 
-                            var ids =await local2.Union(local3).Union(local4).Union(local5).ToArrayAsync();
+                            var ids = await idListFromGenre.Union(idListFromDirector).Union(idListFromScenarist).Union(idListFromAbstractContent).ToArrayAsync();
 
-
+                            list.AddRange(ids);
                         }
 
                         break;
