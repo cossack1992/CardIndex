@@ -144,7 +144,6 @@ namespace UserStore.WEB.Controllers
         [HandleError()]
         public async Task<ActionResult> Update(ContentModelInPut Model)
         {
-
             if (ModelState.IsValid)
             {
                 string pathImage = Save(Model.Image);

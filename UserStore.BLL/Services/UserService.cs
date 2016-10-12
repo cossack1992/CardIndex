@@ -61,7 +61,7 @@ namespace UserStore.BLL.Services
                 }
                 catch (ArgumentOutOfRangeException ex)
                 {
-                    throw ex;
+                    throw ;
                 }
                 catch (Exception ex)
                 {
