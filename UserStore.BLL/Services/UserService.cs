@@ -11,6 +11,7 @@ using System.Linq;
 using System;
 using System.Data.Entity;
 using System.IO;
+using System.Data.Entity.Core;
 
 namespace UserStore.BLL.Services
 {
@@ -63,7 +64,7 @@ namespace UserStore.BLL.Services
                 {
                     throw ;
                 }
-                catch (Exception ex)
+                catch (EntityException ex)
                 {
                     throw new DataAccessException("Creating new user is failed", ex);
                 }
@@ -91,7 +92,7 @@ namespace UserStore.BLL.Services
                     }
                     return claim;
                 }
-                catch (Exception ex)
+                catch (EntityException ex)
                 {
                     throw new DataAccessException("Autenticating is failed", ex);
                 }
@@ -116,7 +117,7 @@ namespace UserStore.BLL.Services
                 }
                 await CreateUser(adminDTO);
             }
-            catch (Exception ex)
+            catch (EntityException ex)
             {
                 throw new DataAccessException("Initialzing is failed", ex);
             }

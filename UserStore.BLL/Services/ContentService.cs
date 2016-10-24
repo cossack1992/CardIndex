@@ -9,6 +9,8 @@ using UserStore.BLL.DTO;
 using UserStore.BLL.Infrastructure;
 using UserStore.BLL.Convert;
 using System.Data.Entity;
+using System.Data;
+using System.Data.Entity.Core;
 
 namespace UserStore.BLL.Services
 {
@@ -80,7 +82,7 @@ namespace UserStore.BLL.Services
                 {
                     throw;
                 }
-                catch (Exception ex)
+                catch (EntityException ex)
                 {
                     throw new DataAccessException("Data Layer: ", ex);
                 }
@@ -131,7 +133,7 @@ namespace UserStore.BLL.Services
                 {
                     throw;
                 }
-                catch (Exception ex)
+                catch (EntityException ex)
                 {
                     throw new DataAccessException("Data Layer: ", ex);
                 }
@@ -184,7 +186,7 @@ namespace UserStore.BLL.Services
                     await DataBase.LanguageManager.SetNew(contentDTO.Language);
                 }
             }
-            catch (Exception ex)
+            catch (EntityException ex)
             {
                 throw new DataAccessException("Data Layer: ", ex);
             }
@@ -198,7 +200,7 @@ namespace UserStore.BLL.Services
                 return new OperationDetails(true, "removal succeeded ", "");
 
             }
-            catch (Exception ex)
+            catch (EntityException ex)
             {
                 throw new DataAccessException("Data layer:", ex);
             }
@@ -211,7 +213,7 @@ namespace UserStore.BLL.Services
                 await DataBase.ContentManager.UpdateCheck(id, check);
                 return new OperationDetails(true, "updating of check succeeded ", "");
             }
-            catch (Exception ex)
+            catch (EntityException ex)
             {
                 throw new DataAccessException("Data layer:", ex);
             }
@@ -236,7 +238,7 @@ namespace UserStore.BLL.Services
                     GenresList.Add(genre.Name);
                 return GenresList;
             }
-            catch (Exception ex)
+            catch (EntityException ex)
             {
                 throw new DataAccessException("Data layer:", ex);
             }
@@ -252,7 +254,7 @@ namespace UserStore.BLL.Services
                     .CountAsync();
                 return i;
             }
-            catch (Exception ex)
+            catch (EntityException ex)
             {
                 throw new DataAccessException("Data layer:", ex);
             }
@@ -267,7 +269,7 @@ namespace UserStore.BLL.Services
             {
                 throw;
             }
-            catch (Exception ex)
+            catch (EntityException ex)
             {
                 throw new DataAccessException("Data layer:", ex);
             }
@@ -295,7 +297,7 @@ namespace UserStore.BLL.Services
             {
                 throw;
             }
-            catch (Exception ex)
+            catch (EntityException ex)
             {
                 throw new DataAccessException("Data layer:", ex);
             }
@@ -477,7 +479,7 @@ namespace UserStore.BLL.Services
                 }
                 return IDlist;
             }
-            catch (Exception ex)
+            catch (EntityException ex)
             {
                 throw new DataAccessException("Data layer:", ex);
             }
@@ -511,7 +513,7 @@ namespace UserStore.BLL.Services
                     return new OperationDetails(false, "Voting  failed ", "");
                 }
             }
-            catch (Exception ex)
+            catch (EntityException ex)
             {
                 throw new DataAccessException("Data layer:", ex);
             }
