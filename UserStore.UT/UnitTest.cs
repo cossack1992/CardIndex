@@ -21,7 +21,9 @@ namespace UserStore.UT
         Image image1 ;
         AbstractContent content;
         ContentDTO contentDTO;
-        
+        /// <summary>
+        /// //////////
+        /// </summary>
         ContentModelOutPut contentWEBOUT;
        [TestInitialize]
         public void TestInitialize()
