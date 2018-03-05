@@ -16,6 +16,9 @@ namespace UserStore.WEB.Controllers
 {
     public class AccountController : Controller
     {
+        protected override void OnException(ExceptionContext filterContext)
+        {
+        }
         // GET: Account
         private IUserService UserService
         {
